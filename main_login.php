@@ -19,9 +19,9 @@
 					<tr>
 						<td colspan="3"><strong>Member Login </strong></td>
 					</tr>
-					<?php if (isset($_SESSION['login-flash'])): ?>
+					<?php if (isset($_SESSION['flash'])): ?>
 					<tr>
-						<td colspan="3"><?php echo $_SESSION['login-flash']; unset($_SESSION['login-flash']); ?></td>
+						<td colspan="3"><?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?></td>
 					</tr>
 					<?php endif; ?>
 					<tr>
