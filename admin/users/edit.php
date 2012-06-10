@@ -7,16 +7,22 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
 	$password = md5(mysql_real_escape_string($_POST['password']));
 	$role = mysql_real_escape_string($_POST['role']);
 	$banned = mysql_real_escape_string($_POST['banned']);
+	$userId = mysql_real_escape_string($_GET['id']);
 
 	// See if there is a conflicting username
 	$sql = "SELECT * FROM members WHERE username = '$username'";
 	$result = mysql_query($sql);
 	if (mysql_num_rows($result) == 0) {
-		$sql = "UPDATE members SET VALUES username = '$username', password = '$password', role = '$role', banned = '$banned')";
+		$sql = "UPDATE members SET " . ($username != '' ? "`username` = '$username', " : '') . 
+											  ($_POST['password'] != '' ? "`password` = '$password', " : '')  . 
+											  ($role != '' ? "`role` = 'role', " : '') . 
+											  ($banned != '' ? "`banned` = '$banned' " : '') . 
+											  "WHERE `id` = '$userId'";
 		$result = mysql_query($sql);
 		if (mysql_affected_rows() > 0) {
 			$_SESSION['flash'] = 'User Modified';
 			header('location:index.php');
+			exit;
 		} else {
 			$_SESSION['flash'] = 'User not added for some reason.';
 		}
@@ -24,7 +30,8 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
 		$_SESSION['flash'] = 'Username in use';
 	}
 	
-} else if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+}
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 	// Get the details from the db
 	$id = mysql_real_escape_string($_GET['id']);
 	$sql = "SELECT * FROM members WHERE id = '$id'";
@@ -47,12 +54,12 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
 	<body>
 		<h1>Create new user</h1>
 		<strong>WARNING: THIS FORM IS NOT VALIDATED. ANYTHING YOU INPUT WILL BE SENT!</strong>
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+		<form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $_GET['id']; ?>" method="post">
 			<fieldset>
 				<table>
 					<?php if (isset($_SESSION['flash'])): ?>
 					<tr>
-						<td colspan="2"><?php echo $_SESSION['flash']; ?></td>
+						<td colspan="2"><?php echo $_SESSION['flash']; unset($_SESSION['flash']);?></td>
 					</tr>
 					<?php endif; ?>
 					<tr>

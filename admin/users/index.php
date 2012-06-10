@@ -15,13 +15,11 @@ while($row = mysql_fetch_assoc($result)) {
 <body>
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 <h1>User List</h1>
-<p>		
-		<?php 
-		if (isset($_SESSION['flash'])) {
-			echo $_SESSION['flash']; unset($_SESSION['adminuser-flash']);
-		}
-		?>
-</p>
+		<?php if (isset($_SESSION['flash'])) : ?>
+		<p>
+			<?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?>
+		</p>
+		<?php endif; ?>
 <a href="create.php">Create New User</a>
 <table>
 	<thead>
