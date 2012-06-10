@@ -8,17 +8,18 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Create Produc
 	$weight = mysql_real_escape_string($_POST['weight']);
 	$price = mysql_real_escape_string($_POST['price']);
 	$active = mysql_real_escape_string($_POST['active']);
+	$imageUrl = mysql_real_escape_string($_POST['image_url']);
 
 	// Some small validation+
 	$errors = 0;
 	foreach ($_POST as $key => $value) {
-		if ($value == '') {
+		if ($value == '' && ($key != 'image_url')) {
 			$_SESSION['flash'][] = $key . ' is empty.';
 			$errors++;
 		}
 	}
 	if ($errors == 0) {
-		$sql = "INSERT INTO products VALUES ('', '$name', '$type', '$weight', '$price', '$active')";
+		$sql = "INSERT INTO products VALUES ('', '$name', '$type', '$weight', '$price', '$active', $imageUrl)";
 		print $sql;
 		$result = mysql_query($sql);
 		if (mysql_affected_rows() > 0) {
