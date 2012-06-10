@@ -11,10 +11,6 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 	$imageUrl = mysql_real_escape_string($_POST['image_url']);
 	$productId = mysql_real_escape_string($_GET['id']);
 
-	// See if there is a conflicting name
-	$sql = "SELECT * FROM members WHERE id = '$productId'";
-	$result = mysql_query($sql) or die(mysql_error());
-	if (mysql_num_rows($result) == 0) {
 		$sql = "UPDATE products SET "
 				. ($name != '' ? "`name` = '$name', " : '')
 				. ($type != '' ? "`type` = '$type', " : '')
@@ -32,9 +28,7 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 			$_SESSION['flash'] = 'User not added for some reason.';
 			echo $sql;
 		}
-	} else {
-		$_SESSION['flash'] = 'Name in use';
-	}
+
 
 }
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
