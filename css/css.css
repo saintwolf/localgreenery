@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+body,td,th {
+	color: #333;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+body {
+	background-color: #660;
+	margin-left: 20%;
+	margin-top: 5%;
+	margin-right: 20%;
+	margin-bottom: 0%;
+}
+a { color: #003300; }
+a:hover { color: #003330; }
+a:visited { color: #003333; }
+
+.logo { 
+
+}
+.logowrapper {
+	background-color: #660;
+}
