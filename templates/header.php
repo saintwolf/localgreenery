@@ -1,4 +1,3 @@
-<?php require_once('adminautoload.php');?>
 <!DOCTYPE html>
 <html>
 <head>
