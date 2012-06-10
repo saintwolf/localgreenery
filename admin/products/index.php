@@ -30,6 +30,7 @@ while($row = mysql_fetch_assoc($result)) {
 			<td>Weight</td>
 			<td>Price</td>
 			<td>Active</td>
+			<td>Image?</td>
 			<td>Edit</td>
 			<td>Delete</td>
 		</tr>
@@ -43,6 +44,7 @@ while($row = mysql_fetch_assoc($result)) {
 				<td><?php echo $product['weight']; ?></td>
 				<td><?php echo $product['price']; ?></td>
 				<td><?php echo $product['active']; ?></td>
+				<td><?php echo ($product['image_url'] == '') ? 'N' : 'Y';?></td>
 				<td><button onClick="parent.location='edit.php?id=<?php echo $product['id'];?>'">Edit</button>
 				<td><button onClick="parent.location='delete.php?id=<?php echo $product['id'];?>'">Delete</button>
 			</tr>
