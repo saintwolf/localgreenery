@@ -1,5 +1,5 @@
 <?php
-$pics=directory('./uploads','jpg,JPG,JPEG,jpeg,png,PNG');
+$pics=dir('./uploads','jpg,JPG,JPEG,jpeg,png,PNG');
 $pics=ditchtn($pics,'tn_');
 if ($pics[0]!='')
 {
