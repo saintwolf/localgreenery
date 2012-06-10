@@ -1,4 +1,5 @@
 <?php
+require_once('./lib/thumbnail.php');
 $pics=dir('./uploads','jpg,JPG,JPEG,jpeg,png,PNG');
 $pics=ditchtn($pics,'tn_');
 if ($pics[0]!='')
