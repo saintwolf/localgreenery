@@ -1,22 +1,27 @@
 <?php
-function make_thumb($src,$dest,$desired_width)
-{
-
-  /* read the source image */
-  $source_image = imagecreatefromjpeg($src);
-  $width = imagesx($source_image);
-  $height = imagesy($source_image);
-  
-  /* find the "desired height" of this thumbnail, relative to the desired width  */
-  $desired_height = floor($height*($desired_width/$width));
-  
-  /* create a new, "virtual" image */
-  $virtual_image = imagecreatetruecolor($desired_width,$desired_height);
-  
-  /* copy source image at a resized size */
-  imagecopyresized($virtual_image,$source_image,0,0,0,0,$desired_width,$desired_height,$width,$height);
-  
-  /* create the physical thumbnail image to its destination */
-  imagejpeg($virtual_image,$dest);
+function createthumb($name, $filename, $new_w, $new_h) {
+	$system = explode('.', $name);
+	$src_img = imagecreatefromjpeg($name);
+	
+	$old_x = imageSX($src_img);
+	$old_y = imageSY($src_img);
+	if ($old_x > $old_y) {
+		$thumb_w = $new_w;
+		$thumb_h = $old_y * ($new_h / $old_x);
+	}
+	if ($old_x < $old_y) {
+		$thumb_w = $old_x * ($new_w / $old_y);
+		$thumb_h = $new_h;
+	}
+	if ($old_x == $old_y) {
+		$thumb_w = $new_w;
+		$thumb_h = $new_h;
+	}
+	$dst_img=ImageCreateTrueColor($thumb_w,$thumb_h);
+	imagecopyresampled($dst_img,$src_img,0,0,0,0,$thumb_w,$thumb_h,$old_x,$old_y);
+		imagejpeg($dst_img, $filename);
+	imagedestroy($dst_img);
+	imagedestroy($src_img);
 }
+
 ?>

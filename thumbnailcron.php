@@ -1,10 +1,15 @@
 <?php
 require_once('./lib/thumbnail.php');
-$pics=dir('./uploads','jpg,JPG,JPEG,jpeg,png,PNG');
+$dir = opendir('./uploads');
+//$pics=dirname();
+while ($pic = readdir($dir)) {
+	$pics[] = $pic;
+}
 if ($pics[0]!='')
 {
 	foreach ($pics as $p)
 	{
-		createthumb('uploads/'.$p,'thumbs/tn_'.$p,100,100);
+		echo "Create thumb for $p";
+		createthumb('uploads/'.$p,'uploads/thumbs/tn_'.$p,100,100);
 	}
 }
