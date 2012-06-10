@@ -8,17 +8,15 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 	$weight = mysql_real_escape_string($_POST['weight']);
 	$price = mysql_real_escape_string($_POST['price']);
 	$active = mysql_real_escape_string($_POST['active']);
+	$imageUrl = mysql_real_escape_string($_POST['image_url']);
 	$productId = mysql_real_escape_string($_GET['id']);
 
-	// See if there is a conflicting name
-	$sql = "SELECT * FROM members WHERE name = '$name'";
-	$result = mysql_query($sql);
-	if (mysql_num_rows($result) == 0) {
 		$sql = "UPDATE products SET "
 				. ($name != '' ? "`name` = '$name', " : '')
 				. ($type != '' ? "`type` = '$type', " : '')
 				. ($weight != '' ? "`weight` = '$weight', " : '')
 				. ($price != '' ? "`price` = '$price', " : '')
+				. ("`image_url` = '$imageUrl', ")
 				. ($active != '' ? "`active` = '$active' " : '')
 				. "WHERE `id` = '$productId'";
 		$result = mysql_query($sql);
@@ -28,10 +26,9 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 			exit;
 		} else {
 			$_SESSION['flash'] = 'User not added for some reason.';
+			echo $sql;
 		}
-	} else {
-		$_SESSION['flash'] = 'Name in use';
-	}
+
 
 }
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
@@ -52,7 +49,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 }
 ?>
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
-		<h1>Create new user</h1>
+		<h1>Modify product</h1>
 		<strong>WARNING: THIS FORM IS NOT VALIDATED. ANYTHING YOU INPUT WILL BE SENT!</strong>
 		<form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $_GET['id']; ?>" method="post">
 			<fieldset>
@@ -95,6 +92,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 							<input type="radio" name="active" value="Y" <?php if ($product['active'] == 'Y') echo 'checked="checked"'?> /> Y<br />
 							<input type="radio" name="active" value="N" <?php if ($product['active'] == 'N') echo 'checked="checked"'?> /> N
 						</td>
+					</tr>
+					<tr>
+						<td><label for="image_url">Image URL: </label></td>
+						<td><input type="text" name="image_url" value="<?php echo $product['image_url']; ?>"/></td>
 					</tr>
 				</table>
 			</fieldset>
