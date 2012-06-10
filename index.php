@@ -28,7 +28,7 @@ while ($row = mysql_fetch_assoc($result)) {
 				<ul>
 					<li><h3><?php echo $product['name']?></h3></li>
 					<?php if ($product['image_url'] != ''): ?><li>
-					<li><a href="<?php echo '/uploads/' . $product['image_url'] ?>"><img src="<?php echo 'uploads/thumbs/' . $product['image_url'] ?>" /></a></li>
+					<li><a href="<?php echo '/uploads/' . $product['image_url'] ?>"><img src="<?php echo 'uploads/thumbs/tn_' . $product['image_url'] ?>" /></a></li>
 					<?php endif; ?>
 					<li>Dominant Type: <?php echo $product['type']?></li>
 					<li>Weight: <?php echo $product['weight']?></li>
