@@ -39,13 +39,8 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
 
 }
 ?>
-<html>
-	<head>
-		<title>Create New User - LocalGreenery</title>
-	</head>
-	<body>
+	<?php require(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 		<h1>Create new user</h1>
-		<strong>WARNING: THIS FORM IS NOT VALIDATED. ANYTHING YOU INPUT WILL BE SENT!</strong>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 			<fieldset>
 				<table>
@@ -87,5 +82,4 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
 			</fieldset>
 			<input type="submit" name="createuser" value="Create User" />
 		</form>
-	</body>
-</html>
+	<?php require(LG_ROOT . DS . 'templates' . DS . 'footer.php'); ?>

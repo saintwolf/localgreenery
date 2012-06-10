@@ -11,8 +11,6 @@ while ($row = mysql_fetch_assoc($result)) {
 	$products[] = $row;
 }
 ?>
-
-
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 <h1>Welcome to Local Greenery</h1>
 <p><h2>Products:</h2></p>
@@ -27,11 +25,9 @@ while ($row = mysql_fetch_assoc($result)) {
 					<li>Dominant Type: <?php echo $product['type']?></li>
 					<li>Weight: <?php echo $product['weight']?></li>
 					<li>Price: <?php echo $product['price']?></li>
+					<li><button onClick="parent.location='enquire.php?id=<?php echo $product['id']; ?>'">Enquire</button></li>
 				</ul>
 			</p>
-		</td>
-		<td>
-			<button onClick="parent.location='enquire.php?id=<?php echo $product['id']; ?>'">Enquire</button>
 		</td>
 	</tr>
 <?php endforeach;?>

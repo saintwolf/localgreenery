@@ -2,18 +2,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="css/css.css" />
+<link rel="stylesheet" type="text/css" href="/css/css.css" />
+<link rel="apple-touch-icon" href="/img/Black_Widow.png" />
+<meta name="viewport" content="width=320" />
 </head> 
-<body class="loginbody">
+<body class="mainbody">
 
-<table width="300" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+<table>
 	<tr class="logowrapper">
-		<td colspan="3"><img src="img/Black_Widow.png" alt="AC" width="328" height="249" /></td>
+		<td><img src="img/Black_Widow.png" alt="Greening your Local" width="300" height="220" /></td>
 	</tr>
 	<tr>
 		<form name="form1" method="post" action="checklogin.php">
 			<td>
-				<table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
+				<table>
 					<tr>
 						<td colspan="3"><strong>Member Login </strong></td>
 					</tr>
@@ -23,9 +25,9 @@
 					</tr>
 					<?php endif; ?>
 					<tr>
-						<td width="78">Username</td>
-						<td width="6">:</td>
-						<td width="294"><input name="myusername" type="text" id="myusername"></td>
+						<td>Username</td>
+						<td>:</td>
+						<td><input name="myusername" type="text" id="myusername"></td>
 					</tr>
 					<tr>
 						<td>Password</td>

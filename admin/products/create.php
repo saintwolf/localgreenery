@@ -34,13 +34,8 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Create Produc
 
 }
 ?>
-<html>
-	<head>
-		<title>Create New Product - LocalGreenery</title>
-	</head>
-	<body>
+<?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 		<h1>Create new product</h1>
-		<strong>WARNING: THIS FORM IS NOT VALIDATED. ANYTHING YOU INPUT WILL BE SENT!</strong>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 			<fieldset>
 				<table>
@@ -85,5 +80,4 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Create Produc
 			</fieldset>
 			<input type="submit" name="createproduct" value="Create Product" />
 		</form>
-	</body>
-</html>
+<?php include(LG_ROOT . DS . 'templates' . DS . 'footer.php'); ?>

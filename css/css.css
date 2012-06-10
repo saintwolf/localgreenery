@@ -16,14 +16,18 @@ body,td,th {
 	width: auto;
 }
 .mainbody table {
-	text-align: left;
+	text-align: center;
 	margin-right: auto;
 	
 	width: auto;
 }
 .mainbody ul {
 	list-style-type: none;
-}	
+}
+.mainbody fieldset {
+	width: auto;
+	margin-top: 10px;
+}
 a { color: #003300; }
 a:hover { color: #003330; }
 a:visited { color: #003333; }

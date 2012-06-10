@@ -48,13 +48,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
 }
 ?>
-<html>
-	<head>
-		<title>Create New User - LocalGreenery</title>
-	</head>
-	<body>
-		<h1>Create new user</h1>
-		<strong>WARNING: THIS FORM IS NOT VALIDATED. ANYTHING YOU INPUT WILL BE SENT!</strong>
+<?php require(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 		<form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $_GET['id']; ?>" method="post">
 			<fieldset>
 				<table>
@@ -102,5 +96,4 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 			</fieldset>
 			<input type="submit" name="createuser" value="Modify User" />
 		</form>
-	</body>
-</html>
+<?php require(LG_ROOT . DS . 'templates' . DS . 'footer.php'); ?>
