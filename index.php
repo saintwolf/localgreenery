@@ -20,8 +20,8 @@ while ($row = mysql_fetch_assoc($result)) {
 	<tr>
 		<td>
 			<p>
-				<h3><?php echo $product['name']?></h3>
 				<ul>
+					<li><h3><?php echo $product['name']?></h3></li>
 					<li>Dominant Type: <?php echo $product['type']?></li>
 					<li>Weight: <?php echo $product['weight']?></li>
 					<li>Price: <?php echo $product['price']?></li>
