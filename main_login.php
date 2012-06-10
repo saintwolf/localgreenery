@@ -1,4 +1,21 @@
 <?php session_start();?>
+<style type="text/css">
+body,td,th {
+	color: #333;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+body {
+	background-color: #660;
+	margin-left: 30%;
+	margin-top: 5%;
+	margin-right: 30%;
+	margin-bottom: 5%;
+	text-align: center;
+}
+</style>
+<body bgcolor="#666600" text="#333333" link="#003300" vlink="#003300" alink="#003300">
+
+<img src="img/Black_Widow.png" alt="AC" width="328" height="249" align="middle" />
 <table width="300" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
 	<tr>
 		<form name="form1" method="post" action="checklogin.php">
@@ -30,5 +47,5 @@
 				</table>
 			</td>
 		</form>
-	</tr>
+  </tr>
 </table>
