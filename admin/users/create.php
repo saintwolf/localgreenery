@@ -8,25 +8,35 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
 	$role = mysql_real_escape_string($_POST['role']);
 	$banned = mysql_real_escape_string($_POST['banned']);
 
-	// See if there is a conflicting username
-	$sql = "SELECT * FROM members WHERE username = '$username'";
-	$result = mysql_query($sql);
-	if (mysql_num_rows($result) == 0) {
-		$sql = "INSERT INTO members VALUES ('', '$username', '$password', '$role', '$banned')";
+	// Some small validation+
+	$errors = 0;
+	foreach ($_POST as $key => $value) {
+		if ($value == '') {
+			$_SESSION['flash'][] = $key . ' is empty.';
+			$errors++;
+		}
+	}
+	if ($errors == 0) {
+		// See if there is a conflicting username
+		$sql = "SELECT * FROM members WHERE username = '$username'";
 		$result = mysql_query($sql);
-		if (mysql_affected_rows() > 0) {
-			$_SESSION['flash'] = 'User Added';
-			header('location:index.php');
+		if (mysql_num_rows($result) == 0) {
+			$sql = "INSERT INTO members VALUES ('', '$username', '$password', '$role', '$banned')";
+			$result = mysql_query($sql);
+			if (mysql_affected_rows() > 0) {
+				$_SESSION['flash'] = 'User Added';
+				header('location:index.php');
+			} else {
+				$_SESSION['flash'] = 'User not added for some reason.';
+			}
 		} else {
-			$_SESSION['flash'] = 'User not added for some reason.';
+			$_SESSION['flash'] = 'Username in use';
 		}
 	} else {
-		$_SESSION['flash'] = 'Username in use';
+		header('location:' . $_SERVER['PHP_SELF']);
+		exit;
 	}
-	
-	
-} else {
-	$_SESSION['flash'] = 'Form not submitted properly';
+
 }
 ?>
 <html>
@@ -39,9 +49,16 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 			<fieldset>
 				<table>
-					<?php if (isset($_SESSION['flash'])): ?>
+					<?php if (isset($_SESSION['flash']) && is_array($_SESSION['flash'])) : ?>
+					<ul>
+						<?php foreach ($_SESSION['flash'] as $error) : ?>
+						<li><?php echo $error; ?></li>
+						<?php endforeach; ?>
+						<?php unset($_SESSION['flash']); ?>
+					</ul>
+					<?php elseif (isset($_SESSION['flash'])) : ?>
 					<tr>
-						<td colspan="2"><?php echo $_SESSION['flash']; ?></td>
+						<td colspan="2"><?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?></td>
 					</tr>
 					<?php endif; ?>
 					<tr>
