@@ -11,9 +11,12 @@ if ($_POST['enquirysubmit'] != 'Submit Enquiry') {
 	$message .= $_POST['enquiry'];
 	$headers = 'From: ' . fromemail;
 	if (mail($to, $subject, $message, $headers)) {
-		echo 'Mail sent!';
+		$_SESSION['flash'] = 'Enquiry Sent Successfully!';
+		header('location:/index.php');
 	} else {
-		echo 'Failed to send mail!';
+		$_SESSION['flash'] = 'Failed to send mail!';
+		header('location:/index.php');
+		exit;
 	}
 }
 ?>

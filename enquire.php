@@ -12,18 +12,13 @@ if (mysql_num_rows($result) < 1) {
 }
 $product = mysql_fetch_assoc($result);
 ?>
-<html>
-	<head>
-		<title>Enquiry for <?php echo $product['name'] ?></title>
-	</head>
-	<body>
+<?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 		<h1>Enquiry for <?php echo $product['name'] ?></h1>
 		<form action="sendenquiry.php" method="post">
 			<fieldset>
 				<label for="enquiry">Message (Optional):</label><br />
-				<textarea rows="6" cols="50" name="enquiry" >Enter an optional message to the seller here.</textarea>
+				<textarea name="enquiry" >Enter an optional message to the seller here.</textarea>
 			</fieldset>
 			<input type="submit" name="enquirysubmit" value="Submit Enquiry" />
 		</form>
-	</body>
-</html>
+<?php include(LG_ROOT . DS . 'templates' . DS . 'footer.php'); ?>

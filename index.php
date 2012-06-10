@@ -15,6 +15,11 @@ while ($row = mysql_fetch_assoc($result)) {
 <h1>Welcome to Local Greenery</h1>
 <p><h2>Products:</h2></p>
 <table>
+	<?php if (isset($_SESSION['flash'])): ?>
+	<tr>
+		<td><strong><?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?></strong></td>
+	</tr>
+	<?php endif; ?>
 <?php if (mysql_num_rows($result) > 0): ?>
 <?php foreach ($products as $product): ?>
 	<tr>

@@ -28,6 +28,10 @@ body,td,th {
 	width: auto;
 	margin-top: 10px;
 }
+	.mainbody fieldset textarea {
+		width: 100%;
+		height: 120px;
+	}
 a { color: #003300; }
 a:hover { color: #003330; }
 a:visited { color: #003333; }
