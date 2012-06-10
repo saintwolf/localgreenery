@@ -2,7 +2,7 @@
 require('../adminautoload.php');
 
 // Check if form was sent
-if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
+if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Modify User')) {
 	$username = mysql_real_escape_string($_POST['username']);
 	$password = md5(mysql_real_escape_string($_POST['password']));
 	$role = mysql_real_escape_string($_POST['role']);
@@ -13,11 +13,12 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
 	$sql = "SELECT * FROM members WHERE username = '$username'";
 	$result = mysql_query($sql);
 	if (mysql_num_rows($result) == 0) {
-		$sql = "UPDATE members SET " . ($username != '' ? "`username` = '$username', " : '') . 
-											  ($_POST['password'] != '' ? "`password` = '$password', " : '')  . 
-											  ($role != '' ? "`role` = 'role', " : '') . 
-											  ($banned != '' ? "`banned` = '$banned' " : '') . 
-											  "WHERE `id` = '$userId'";
+		$sql = "UPDATE members SET "
+				. ($username != '' ? "`username` = '$username', " : '')
+				. ($_POST['password'] != '' ? "`password` = '$password', " : '')
+				. ($role != '' ? "`role` = '$role', " : '')
+				. ($banned != '' ? "`banned` = '$banned' " : '')
+				. "WHERE `id` = '$userId'";
 		$result = mysql_query($sql);
 		if (mysql_affected_rows() > 0) {
 			$_SESSION['flash'] = 'User Modified';
@@ -29,7 +30,7 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
 	} else {
 		$_SESSION['flash'] = 'Username in use';
 	}
-	
+
 }
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 	// Get the details from the db
@@ -44,7 +45,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 	}
 } else {
 	$_SESSION['flash'] = 'User edit form not submitted properly';
-	
+
 }
 ?>
 <html>
@@ -57,14 +58,15 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 		<form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $_GET['id']; ?>" method="post">
 			<fieldset>
 				<table>
-					<?php if (isset($_SESSION['flash'])): ?>
+					<?php if (isset($_SESSION['flash'])) : ?>
 					<tr>
-						<td colspan="2"><?php echo $_SESSION['flash']; unset($_SESSION['flash']);?></td>
+						<td colspan="2"><?php echo $_SESSION['flash'];
+	unset($_SESSION['flash']); ?></td>
 					</tr>
 					<?php endif; ?>
 					<tr>
 						<td><label for="username">Username: </label></td>
-						<td><input type="text" name="username" value=<?php echo $user['username'];?> /></td>
+						<td><input type="text" name="username" value=<?php echo $user['username']; ?> /></td>
 					</tr>
 					<tr>
 						<td><label for="password">Password: </label></td>
@@ -73,20 +75,32 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 					<tr>
 						<td>Role: </td>
 						<td>
-							<input type="radio" name="role" value="user" <?php if ($user['role'] == 'USER') echo 'checked="checked"'?> /> User<br />
-							<input type="radio" name="role" value="admin" <?php if ($user['role'] == 'ADMIN') echo 'checked="checked"'?> /> Admin
+							<input type="radio" name="role" value="user" <?php if ($user['role']
+		== 'USER')
+	echo 'checked="checked"' ?>
+ /> User<br />
+							<input type="radio" name="role" value="admin" <?php if ($user['role']
+		== 'ADMIN')
+	echo 'checked="checked"' ?>
+ /> Admin
 						</td>
 					</tr>
 					<tr>
 						<td><label for="active">Banned: </label></td>
 						<td>
-							<input type="radio" name="banned" value="Y" <?php if ($user['banned'] == 'Y') echo 'checked="checked"'?> /> Y<br />
-							<input type="radio" name="banned" value="N" <?php if ($user['banned'] == 'N') echo 'checked="checked"'?>" /> N
+							<input type="radio" name="banned" value="Y" <?php if ($user['banned']
+		== 'Y')
+	echo 'checked="checked"' ?>
+ /> Y<br />
+							<input type="radio" name="banned" value="N" <?php if ($user['banned']
+		== 'N')
+	echo 'checked="checked"' ?>
+" /> N
 						</td>
 					</tr>
 				</table>
 			</fieldset>
-			<input type="submit" name="createuser" value="Create User" />
+			<input type="submit" name="createuser" value="Modify User" />
 		</form>
 	</body>
 </html>
