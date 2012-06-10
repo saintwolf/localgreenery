@@ -2,7 +2,8 @@
 require_once('lib/autoload.php');
 
 // Check if form has been submitted
-if (isset($_POST['changepassword']) && ($_POST['changepassword']) == 'Change Password') {
+if (isset($_POST['changepassword'])
+		&& ($_POST['changepassword']) == 'Change Password') {
 	// Process the form
 	$currentPass = md5(mysql_real_escape_string($_POST['currentpass']));
 	$newPass = md5(mysql_real_escape_string($_POST['newpass']));
@@ -10,7 +11,8 @@ if (isset($_POST['changepassword']) && ($_POST['changepassword']) == 'Change Pas
 	if ($currentPass == $_SESSION['user']['password']) {
 		if ($newPass == $newPassConfirm) {
 			if ($newPass != '') {
-				$sql = "UPDATE members SET password='" . $newPass . "' WHERE `id` = '" . $_SESSION['user']['id'] . "'";
+				$sql = "UPDATE members SET password='" . $newPass
+						. "' WHERE `id` = '" . $_SESSION['user']['id'] . "'";
 				$result = mysql_query($sql);
 				if (mysql_affected_rows() > 0) {
 					// Now that the password is changed, kill the session and force relogin.
@@ -18,7 +20,8 @@ if (isset($_POST['changepassword']) && ($_POST['changepassword']) == 'Change Pas
 					unset($_SESSION['user']);
 					header('location:main_login.php');
 				} else {
-					$_SESSION['changepass-flash'] = 'Unable to find member' . $sql;
+					$_SESSION['changepass-flash'] = 'Unable to find member'
+							. $sql;
 					header('location:changepassword.php');
 					exit;
 				}
@@ -39,19 +42,14 @@ if (isset($_POST['changepassword']) && ($_POST['changepassword']) == 'Change Pas
 	}
 }
 ?>
-<html>
-	<head>
-		<title>Change Password</title>
-	</head>
-	<body>
 		<?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 		<h1>Change Password</h1>
 		<form action=<?php echo $_SERVER['PHP_SELF']; ?> method="post">
-			<fieldset>
 				<table>
-					<?php if (isset($_SESSION['changepass-flash'])): ?>
+					<?php if (isset($_SESSION['changepass-flash'])) : ?>
 					<tr>
-						<td><?php echo $_SESSION['changepass-flash']; unset($_SESSION['changepass-flash']); ?></td>
+						<td><?php echo $_SESSION['changepass-flash'];
+	unset($_SESSION['changepass-flash']); ?></td>
 					</tr>
 					<?php endif; ?>
 					<tr>
@@ -67,7 +65,6 @@ if (isset($_POST['changepassword']) && ($_POST['changepassword']) == 'Change Pas
 						<td><input type="password" name="newpassconfirm" /></td>
 					</tr>
 				</table>
-			</fieldset>
 			<input type="submit" name="changepassword" value="Change Password" />
 		</form>
 		<?php include(LG_ROOT . DS . 'templates' . DS . 'footer.php'); ?>

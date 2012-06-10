@@ -4,7 +4,7 @@
 <head>
 <link rel="stylesheet" type="text/css" href="css/css.css" />
 </head> 
-<body>
+<body class="loginbody">
 
 <table width="300" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
 	<tr class="logowrapper">

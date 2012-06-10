@@ -4,20 +4,29 @@ body,td,th {
 	color: #333;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
-body {
+.loginbody {
 	background-color: #660;
 	margin-left: 20%;
 	margin-top: 5%;
 	margin-right: 20%;
 	margin-bottom: 0%;
 }
+.mainbody {
+	background-color: #660;
+	width: auto;
+}
+.mainbody table {
+	text-align: left;
+	margin-right: auto;
+	
+	width: auto;
+}
+.mainbody ul {
+	list-style-type: none;
+}	
 a { color: #003300; }
 a:hover { color: #003330; }
 a:visited { color: #003333; }
-
-.logo { 
-
-}
 .logowrapper {
 	background-color: #660;
 }

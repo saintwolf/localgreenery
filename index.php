@@ -12,8 +12,7 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 ?>
 
-<html>
-<body>
+
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 <h1>Welcome to Local Greenery</h1>
 <p><h2>Products:</h2></p>
@@ -32,7 +31,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			</p>
 		</td>
 		<td>
-			<a href="enquire.php?id=<?php echo $product['id']; ?>">Enquire</a>
+			<button onClick="parent.location='enquire.php?id=<?php echo $product['id']; ?>'">Enquire</a>
 		</td>
 	</tr>
 <?php endforeach;?>
@@ -44,5 +43,3 @@ while ($row = mysql_fetch_assoc($result)) {
 <?php endif; ?>
 
 <?php include(LG_ROOT . DS . 'templates' . DS . 'footer.php'); ?>
-</body>
-</html>
