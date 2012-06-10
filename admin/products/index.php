@@ -14,7 +14,13 @@ while($row = mysql_fetch_assoc($result)) {
 </head>
 <body>
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
-<h1>User List</h1>
+<h1>Product List</h1>
+		<?php if (isset($_SESSION['flash'])) : ?>
+		<p>
+			<?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?>
+		</p>
+		<?php endif; ?>
+<a href="create.php">Create New Product</a>
 <table>
 	<thead>
 		<tr>
@@ -23,6 +29,9 @@ while($row = mysql_fetch_assoc($result)) {
 			<td>Type</td>
 			<td>Weight</td>
 			<td>Price</td>
+			<td>Active</td>
+			<td>Edit</td>
+			<td>Delete</td>
 		</tr>
 	</thead>
 	<tbody>
@@ -33,6 +42,9 @@ while($row = mysql_fetch_assoc($result)) {
 				<td><?php echo $product['type']; ?></td>
 				<td><?php echo $product['weight']; ?></td>
 				<td><?php echo $product['price']; ?></td>
+				<td><?php echo $product['active']; ?></td>
+				<td><a href="edit.php?id=<?php echo $product['id'];?>">Edit</a>
+				<td><a href="delete.php?id=<?php echo $product['id'];?>">Delete</a></td>
 			</tr>
 		<?php endforeach; ?>
 	</tbody>

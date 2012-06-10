@@ -3,7 +3,7 @@
 include ('lib/autoload.php');
 
 // Fetch the products from the database
-$sql = "SELECT * FROM products";
+$sql = "SELECT * FROM products WHERE `active` = 'Y'";
 $result = mysql_query($sql, $conn);
 
 $products = array();
