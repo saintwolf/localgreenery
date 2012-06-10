@@ -31,7 +31,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			</p>
 		</td>
 		<td>
-			<button onClick="parent.location='enquire.php?id=<?php echo $product['id']; ?>'">Enquire</a>
+			<button onClick="parent.location='enquire.php?id=<?php echo $product['id']; ?>'">Enquire</button>
 		</td>
 	</tr>
 <?php endforeach;?>

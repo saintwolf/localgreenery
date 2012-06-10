@@ -26,7 +26,6 @@ while($row = mysql_fetch_assoc($result)) {
 		<tr>
 			<td>Id</td>
 			<td>Username</td>
-			<td>Password</td>
 			<td>Role</td>
 			<td>Banned?</td>
 			<td>Edit</td>
@@ -38,11 +37,10 @@ while($row = mysql_fetch_assoc($result)) {
 			<tr>
 				<td><?php echo $user['id']; ?></td>
 				<td><?php echo $user['username']; ?></td>
-				<td><?php echo $user['password']; ?></td>
 				<td><?php echo $user['role']; ?></td>
 				<td><?php echo $user['banned']; ?></td>
-				<td><a href="edit.php?id=<?php echo $user['id'];?>">Edit</a>
-				<td><a href="delete.php?id=<?php echo $user['id'];?>">Delete</a></td>
+				<td><button onClick="parent.location='edit.php?id=<?php echo $user['id'];?>'">Edit</button>
+				<td><button onClick="parent.location='delete.php?id=<?php echo $user['id'];?>'">Delete</button>
 			</tr>
 		<?php endforeach; ?>
 	</tbody>
