@@ -27,6 +27,9 @@ while ($row = mysql_fetch_assoc($result)) {
 			<p>
 				<ul>
 					<li><h3><?php echo $product['name']?></h3></li>
+					<?php if ($product['image_url'] != ''): ?><li>
+					<li><a href="<?php echo $product['image_url'] ?>"><img src="<?php echo $product['image_url'] ?>" /></a></li>
+					<?php endif; ?>
 					<li>Dominant Type: <?php echo $product['type']?></li>
 					<li>Weight: <?php echo $product['weight']?></li>
 					<li>Price: <?php echo $product['price']?></li>

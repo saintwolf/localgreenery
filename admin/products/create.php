@@ -76,6 +76,10 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Create Produc
 							<input type="radio" name="active" value="N" /> N
 						</td>
 					</tr>
+					<tr>
+						<td><label for="image_url">Image URL: </label></td>
+						<td><input type="text" name="image_url" /></td>
+					</tr>
 				</table>
 			</fieldset>
 			<input type="submit" name="createproduct" value="Create Product" />
