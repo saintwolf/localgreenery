@@ -1,5 +1,5 @@
 <?php
-require_once('./lib/thumbnail.php');
+require_once('./lib/functions.php');
 $dir = opendir('./uploads');
 //$pics=dirname();
 while ($pic = readdir($dir)) {

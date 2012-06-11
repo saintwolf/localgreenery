@@ -13,6 +13,16 @@ $sellerStatus = $row[0];
 	<li><a href="users/">Users</a></li>
 	<li><a href="products/">Products</a></li>
 </ul>
+<form class="statusform" action="newstatus.php" method="post">
+	<table>
+	<?php if (isset($_SESSION['flash'])): ?>
+		<tr><td><?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?>
+	<?php endif; ?>
+		<tr><td>Post new status:</td></tr>
+		<tr><td><input type="text" name="status" /></td></tr>
+		<tr><td><input type="submit" name="submit" value="Post Status" />
+	</table>
+</form
 <?php require(LG_ROOT . DS . 'templates' . DS . 'footer.php'); ?>
 </body>
 </html>

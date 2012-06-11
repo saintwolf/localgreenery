@@ -10,10 +10,23 @@ $products = array();
 while ($row = mysql_fetch_assoc($result)) {
 	$products[] = $row;
 }
+/*
+// Get the news from the db
+$sql = "SELECT * FROM `options` INNER JOIN `options` ON `options`.`user_id`=`members`.`id` WHERE `option` = 'statustext'";
+$result = mysql_query($sql);
+echo $sql;
+$news = mysql_fetch_assoc($result);
+*/
+$news = $options['statustext'];
 ?>
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 <h1>Welcome to Local Greenery</h1>
+<div class="statusbar">
+<h4>Latest News</h4>
+<p><?php echo $news['value']; ?></p>
+<footer>Posted <?php echo ago($news['updated_at']); ?> by <?php echo $news['username'];?></footer>
 <p><h2>Products:</h2></p>
+</div>
 <table>
 	<?php if (isset($_SESSION['flash'])): ?>
 	<tr>
