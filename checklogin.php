@@ -21,7 +21,6 @@ $count = mysql_num_rows($result);
 
 // If result matched $myusername and $mypassword, table row must be 1 row
 if ($count == 1) {
-
 	// Register user to session and redirect to file "login_success.php" 
 	$user = array();
 	$user = mysql_fetch_assoc($result);
