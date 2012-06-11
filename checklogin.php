@@ -25,7 +25,7 @@ if ($count == 1) {
 	$user = array();
 	$user = mysql_fetch_assoc($result);
 	$_SESSION['user'] = $user;
-	header("location:index.php");
+	header("location:/index.php");
 } else {
 	$_SESSION['flash'] = "Wrong Username or Password";
 	header('location:/main_login.php');
