@@ -1,6 +1,19 @@
 <?php
 require('../adminautoload.php');
 
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    // Get the details from the db
+    $id = mysql_real_escape_string($_GET['id']);
+    $sql = "SELECT * FROM members WHERE id = '$id'";
+    $result = mysql_query($sql);
+    if (mysql_num_rows($result) > 0) {
+        $user = mysql_fetch_assoc($result);
+    } else {
+        $_SESSION['flash'] = 'User not found';
+        header('location:index.php');
+    }
+}
+
 // Check if form was sent
 if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Modify User')) {
 	$username = mysql_real_escape_string($_POST['username']);
@@ -8,11 +21,12 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Modify User')) {
 	$role = mysql_real_escape_string($_POST['role']);
 	$banned = mysql_real_escape_string($_POST['banned']);
 	$userId = mysql_real_escape_string($_GET['id']);
-
+	
 	// See if there is a conflicting username
 	$sql = "SELECT * FROM members WHERE username = '$username'";
 	$result = mysql_query($sql);
-	if (mysql_num_rows($result) == 0) {
+
+	if (mysql_num_rows($result) == 0 || $username == $user['username']) {
 		$sql = "UPDATE members SET "
 				. ($username != '' ? "`username` = '$username', " : '')
 				. ($_POST['password'] != '' ? "`password` = '$password', " : '')
@@ -24,28 +38,13 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Modify User')) {
 			$_SESSION['flash'] = 'User Modified';
 			header('location:index.php');
 			exit;
-		} else {
-			$_SESSION['flash'] = 'User not added for some reason.';
 		}
 	} else {
 		$_SESSION['flash'] = 'Username in use';
 	}
 
-}
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-	// Get the details from the db
-	$id = mysql_real_escape_string($_GET['id']);
-	$sql = "SELECT * FROM members WHERE id = '$id'";
-	$result = mysql_query($sql);
-	if (mysql_num_rows($result) > 0) {
-		$user = mysql_fetch_assoc($result);
-	} else {
-		$_SESSION['flash'] = 'User not found';
-		header('location:index.php');
-	}
 } else {
 	$_SESSION['flash'] = 'User edit form not submitted properly';
-
 }
 ?>
 <?php require(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
