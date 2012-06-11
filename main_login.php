@@ -1,4 +1,15 @@
-<?php session_start();?>
+<?php 
+session_start();
+define('DS', DIRECTORY_SEPARATOR);
+define('LG_ROOT', __DIR__);
+require_once(LG_ROOT . DS . 'lib' . DS . 'db.php');
+
+// Get seller status from db
+$result = mysql_query("SELECT `value` FROM `options` WHERE `option` = 'status'") or die('Could not get options: ' . mysql_error());
+$row = mysql_fetch_array($result);
+$status = $row[0];
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +22,9 @@
 
 <table>
 	<tr class="logowrapper">
+	<?php if ($status == 'Available'): ?>
 		<td><img src="img/Black_Widow.png" alt="Greening your Local" width="300" height="220" /></td>
+	<?php endif; ?>
 	</tr>
 	<tr>
 		<form name="form1" method="post" action="checklogin.php">
