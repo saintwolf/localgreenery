@@ -3,10 +3,10 @@ require('../adminautoload.php');
 
 // Check if form was sent
 if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
-	$username = mysql_real_escape_string($_POST['username']);
+	$username = trim(mysql_real_escape_string($_POST['username']));
 	$password = md5(mysql_real_escape_string($_POST['password']));
-	$role = mysql_real_escape_string($_POST['role']);
-	$banned = mysql_real_escape_string($_POST['banned']);
+	$role = trim(mysql_real_escape_string($_POST['role']));
+	$banned = trim(mysql_real_escape_string($_POST['banned']));
 
 	// Some small validation+
 	$errors = 0;
