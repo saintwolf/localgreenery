@@ -6,8 +6,8 @@ if (isset($_POST['changepassword'])
 		&& ($_POST['changepassword']) == 'Change Password') {
 	// Process the form
 	$currentPass = md5(mysql_real_escape_string($_POST['currentpass']));
-	$newPass = md5(mysql_real_escape_string($_POST['newpass']));
-	$newPassConfirm = md5(mysql_real_escape_string($_POST['newpassconfirm']));
+	$newPass = ($_POST['newpass'] != '') ? md5(mysql_real_escape_string($_POST['newpass'])) : '';
+	$newPassConfirm = ($_POST['newpassconfirm'] != '') ? md5(mysql_real_escape_string($_POST['newpassconfirm'])) : '';
 	if ($currentPass == $_SESSION['user']['password']) {
 		if ($newPass == $newPassConfirm) {
 			if ($newPass != '') {
