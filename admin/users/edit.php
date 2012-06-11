@@ -48,6 +48,7 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Modify User')) {
 }
 ?>
 <?php require(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
+    <h1>Edit User</h1>
 		<form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $_GET['id']; ?>" method="post">
 			<fieldset>
 				<table>
