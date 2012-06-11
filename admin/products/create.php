@@ -3,12 +3,12 @@ require('../adminautoload.php');
 
 // Check if form was sent
 if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Create Product')) {
-	$name = mysql_real_escape_string($_POST['name']);
-	$type = mysql_real_escape_string($_POST['type']);
-	$weight = mysql_real_escape_string($_POST['weight']);
-	$price = mysql_real_escape_string($_POST['price']);
-	$active = mysql_real_escape_string($_POST['active']);
-	$imageUrl = mysql_real_escape_string($_POST['image_url']);
+	$name = trim(mysql_real_escape_string($_POST['name']));
+	$type = trim(mysql_real_escape_string($_POST['type']));
+	$weight = trim(mysql_real_escape_string($_POST['weight']));
+	$price = trim(mysql_real_escape_string($_POST['price']));
+	$active = trim(mysql_real_escape_string($_POST['active']));
+	$imageUrl = trim(mysql_real_escape_string($_POST['image_url']));
 
 	// Some small validation+
 	$errors = 0;
@@ -19,7 +19,7 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Create Produc
 		}
 	}
 	if ($errors == 0) {
-		$sql = "INSERT INTO products VALUES ('', '$name', '$type', '$weight', '$price', '$active', $imageUrl)";
+		$sql = "INSERT INTO products VALUES ('', '$name', '$type', '$weight', '$price', '$active', '$imageUrl')";
 		print $sql;
 		$result = mysql_query($sql);
 		if (mysql_affected_rows() > 0) {
