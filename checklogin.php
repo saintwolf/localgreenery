@@ -1,6 +1,8 @@
 <?php
 session_start();
-require_once('lib/db.php');
+define('LG_ROOT', dirname(__FILE__));
+define('DS', DIRECTORY_SEPARATOR);
+require_once(__DIR__ . DS . 'lib' . DS . 'db.php');
 // username and password sent from form 
 $myusername = $_POST['myusername'];
 $mypassword = $_POST['mypassword'];
