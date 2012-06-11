@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="/css/css.css" />
 <link rel="apple-touch-icon" href="/img/Black_Widow.png" />
 <meta name="viewport" content="width=320" />
-<title>LocalGreenery - Homepage</title>
+<title>LocalGreenery</title>
 </head>
 <body class="mainbody">
 Seller is <strong><?php echo $status['value']; ?></strong><br />
