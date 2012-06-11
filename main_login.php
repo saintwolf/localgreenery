@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="/css/css.css" />
 <link rel="apple-touch-icon" href="/img/Black_Widow.png" />
 <meta name="viewport" content="width=320" />
+<title>Login</title>
 </head> 
 <body class="mainbody">
 
