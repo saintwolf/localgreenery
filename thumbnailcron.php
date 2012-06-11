@@ -9,7 +9,9 @@ if ($pics[0]!='')
 {
 	foreach ($pics as $p)
 	{
+		if ($p != '' && $p != '.' && $p !=  '..' && $p !=  'thumbs') {
 		echo "Create thumb for $p";
 		createthumb('uploads/'.$p,'uploads/thumbs/tn_'.$p,100,100);
+		}
 	}
 }
