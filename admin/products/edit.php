@@ -1,6 +1,20 @@
 <?php
 require('../adminautoload.php');
 
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    // Get the details from the db
+    $id = mysql_real_escape_string($_GET['id']);
+    $sql = "SELECT * FROM products WHERE id = '$id'";
+    $result = mysql_query($sql);
+    if (mysql_num_rows($result) > 0) {
+        $product = mysql_fetch_assoc($result);
+    } else {
+        $_SESSION['flash'] = 'User not found';
+        header('location:index.php');
+        exit;
+    }
+}
+
 // Check if form was sent
 if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Product')) {
 	$name = mysql_real_escape_string($_POST['name']);
@@ -24,28 +38,9 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 			$_SESSION['flash'] = 'User Modified';
 			header('location:index.php');
 			exit;
-		} else {
-			$_SESSION['flash'] = 'User not added for some reason.';
-			echo $sql;
 		}
-
-
-}
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-	// Get the details from the db
-	$id = mysql_real_escape_string($_GET['id']);
-	$sql = "SELECT * FROM products WHERE id = '$id'";
-	$result = mysql_query($sql);
-	if (mysql_num_rows($result) > 0) {
-		$product = mysql_fetch_assoc($result);
-	} else {
-		$_SESSION['flash'] = 'User not found';
-		header('location:index.php');
-		exit;
-	}
 } else {
 	$_SESSION['flash'] = 'User edit form not submitted properly';
-
 }
 ?>
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
