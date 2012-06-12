@@ -2,12 +2,12 @@
 require_once('adminautoload.php');
 
 if (isset($_POST['submit'])) {
-	if ($_POST['status'] != '') {
+	if ($_POST['newstext'] != '') {
 		// Post the new status
-		$sql = "UPDATE options SET `value` = '" . $_POST['status'] . "', `user_id` = '" . $_SESSION['user']['id'] . "', `updated_at` = '" . time() . "' WHERE `option` = 'statustext'" ;
+		$sql = "INSERT INTO news VALUES ('', '" . $_POST['newstext'] . "', " . $_SESSION['user']['id'] . ", " . time() . ")" ;
 		$result = mysql_query($sql);
 		if (mysql_affected_rows() == 1) {
-			$_SESSION['flash'] = 'Status updated!';
+			$_SESSION['flash'] = 'News added!';
 			header('location:/admin/index.php');
 			exit;
 		} else {
@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
 			exit;
 		}
 	} else {
-		$_SESSION['flash'] = 'You need to put something in the status';
+		$_SESSION['flash'] = 'You need to put something in the news post';
 		header('location:/admin/index.php');
 		exit;
 	}
