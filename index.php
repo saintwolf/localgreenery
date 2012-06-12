@@ -19,12 +19,12 @@ $news = mysql_fetch_assoc($result);
 ?>
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 <h1>Welcome to Local Greenery</h1>
-<div class="statusbar">
+<div class="newsbar">
 <h4>Latest News</h4>
 <p><?php echo $news['text']; ?></p>
 <footer>Posted <?php echo ago($news['created_at']); ?> by <?php echo $news['username'];?></footer>
-<p><h2>Products:</h2></p>
 </div>
+<p><h2>Products:</h2></p>
 <table>
 	<?php if (isset($_SESSION['flash'])): ?>
 	<tr>

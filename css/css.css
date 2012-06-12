@@ -32,22 +32,27 @@ body,td,th {
 	width: 100%;
 	height: 120px;
 }
-.statusbar {
+.newsbar {
 	width: 320px;
 	text-align: center;
 }
-.statusbar footer {
+.newsbar footer {
 	margin-top: -10px;
 	font-size: 12px;
 }
-.statusform table {
+.newsform table {
 	width: 320px;
-	text-align: center;
 }
 
-a { color: #003300; }
-a:hover { color: #003330; }
-a:visited { color: #003333; }
+a { 
+	color: #003300; 
+}
+a:hover { 
+	color: #003330; 
+}
+a:visited { 
+	color: #003333; 
+}
 .logowrapper {
 	background-color: #660;
 }
