@@ -19,7 +19,7 @@ while ($pic = readdir($dir)) {
 if ($pics[0] != '') {
     foreach ($pics as $p) {
 
-        if ($p != '' && $p != '.' && $p != '..' && $p != 'thumbs') {
+        if (!is_dir($uploadDir . DS . $p)) {
             if (!file_exists($uploadDir . DS . 'thumbs' . DS . 'tn_' . $p)) {
                 echo "Create thumb for " . $uploadDir . DS . $p . " in "
                         . $uploadDir . DS . 'thumbs' . DS . 'tn_' . $p . "\n";
