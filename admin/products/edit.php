@@ -39,8 +39,6 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 			header('location:index.php');
 			exit;
 		}
-} else {
-	$_SESSION['flash'] = 'User edit form not submitted properly';
 }
 ?>
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
@@ -60,9 +58,7 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 					</ul>
 					<?php elseif (isset($_SESSION['flash'])) : ?>
 					<tr>
-						<td colspan="2"><?php echo $_SESSION['flash'];
-	unset($_SESSION['flash']);
-										?></td>
+						<td colspan="2"><?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?></td>
 					</tr>
 					<?php endif; ?>
 					<tr>
