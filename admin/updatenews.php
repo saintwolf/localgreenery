@@ -2,6 +2,7 @@
 require_once('adminautoload.php');
 
 if (isset($_POST['submit'])) {
+    $_POST['newstext'] = mysql_real_escape_string($_POST['newstext']);
 	if ($_POST['newstext'] != '') {
 		// Post the new status
 		$sql = "INSERT INTO news VALUES ('', '" . $_POST['newstext'] . "', " . $_SESSION['user']['id'] . ", " . time() . ")" ;
