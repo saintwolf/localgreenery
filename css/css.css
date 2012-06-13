@@ -47,7 +47,7 @@ body,td,th {
 }
 
 .appcontainer {
-	width: 320px;
+	width: auto;
 	text-align: center;
 }
 

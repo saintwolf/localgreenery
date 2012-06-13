@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" type="text/css" href="/css/css.css" />
 <link rel="apple-touch-icon" href="/img/Black_Widow.png" />
-<meta name="viewport" content="width=320" />
+<meta name="viewport" content="width=device-width; initial-scale = 1.0; maximum-scale=1.0; user-scalable=no" />
 <title>LocalGreenery</title>
 </head>
 <body class="mainbody">
