@@ -8,6 +8,7 @@
 <title>LocalGreenery</title>
 </head>
 <body class="mainbody">
+<div class="appcontainer">
 Seller is <strong><?php echo $options['status']['value']; ?></strong><br />
 You are logged in as <?php echo $_SESSION['user']['username']?><br />
 <a href="/Logout.php">Logout</a> - <a href="/changepassword.php">Change Password</a><br />

@@ -20,22 +20,21 @@ $news = mysql_fetch_assoc($result);
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 <h1>Welcome to Local Greenery</h1>
 <div class="newsbar">
-<h4>Latest News</h4>
-<p><?php echo $news['text']; ?></p>
-<footer>Posted <?php echo ago($news['created_at']); ?> by <?php echo $news['username'];?></footer>
+<ul>
+    <li><h4>Latest News</h4></li>
+    <li><p><?php echo $news['text']; ?></p></li>
+    <li id="newsfooter">Posted <?php echo ago($news['created_at']); ?> by <?php echo $news['username'];?></li>
+</ul>
 </div>
-<p><h2>Products:</h2></p>
-<table>
-	<?php if (isset($_SESSION['flash'])): ?>
-	<tr>
-		<td><strong><?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?></strong></td>
-	</tr>
-	<?php endif; ?>
+<?php if (isset($_SESSION['flash'])): ?>
+<ul>
+	<li><strong><?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?></strong></li>
+</ul>
+<?php endif; ?>
+<div class="products">
+<h2>Products</h2>
 <?php if (mysql_num_rows($result) > 0): ?>
 <?php foreach ($products as $product): ?>
-	<tr>
-		<td>
-			<p>
 				<ul>
 					<li><h3><?php echo $product['name']?></h3></li>
 					<?php if ($product['image_url'] != ''): ?><li>
@@ -46,15 +45,12 @@ $news = mysql_fetch_assoc($result);
 					<li>Price: <?php echo $product['price']?></li>
 					<li><button onClick="parent.location='enquire.php?id=<?php echo $product['id']; ?>'">Enquire</button></li>
 				</ul>
-			</p>
-		</td>
-	</tr>
 <?php endforeach;?>
-</table>
 <?php else: ?>
 	<p>
 		<h3>No products available. Please try again later.</h3>
 	</p>
 <?php endif; ?>
+</div>
 
 <?php include(LG_ROOT . DS . 'templates' . DS . 'footer.php'); ?>

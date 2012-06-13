@@ -18,11 +18,16 @@ body,td,th {
 .mainbody table {
 	text-align: center;
 	margin-right: auto;
+	margin-left: auto;
 	
 	width: auto;
 }
 .mainbody ul {
 	list-style-type: none;
+	list-style: none;
+	text-align: center;
+	padding-left: 0;
+
 }
 .mainbody fieldset {
 	width: auto;
@@ -33,15 +38,24 @@ body,td,th {
 	height: 120px;
 }
 .newsbar {
-	width: 320px;
-	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
 }
-.newsbar footer {
+.newsbar #newsfooter {
 	margin-top: -10px;
 	font-size: 12px;
 }
-.newsform table {
+
+.appcontainer {
 	width: 320px;
+	text-align: center;
+}
+
+.products h2 {
+	text-align: center;
+	text-decoration: underline;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 a { 
