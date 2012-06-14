@@ -5,11 +5,17 @@ $uploadDir = __DIR__ . DS . 'uploads';
 // Check if the upload and thumbs directory exist
 if (!file_exists($uploadDir)) {
     echo 'Creating upload directory at: ' . $uploadDir . "\n";
-    mkdir($uploadDir, 0755) or die('Fatal: Unable to create directory: ' . $uploadDir . "\n");
+    if (!mkdir($uploadDir, 0755)) {
+        echo('Fatal: Unable to create directory: ' . $uploadDir . "\n");
+        return -1;
+    }
 }
 if (!file_exists($uploadDir . DS . 'thumbs')) {
     echo 'Creating thumbs directory at: ' . $uploadDir . DS . 'thumbs' . "\n";
-    mkdir($uploadDir . DS . 'thumbs', 0755) or die('Fatal: Unable to create directory: ' . $uploadDir . "\n");
+    if (!mkdir($uploadDir . DS . 'thumbs', 0755)) {
+        echo('Fatal: Unable to create directory: ' . $uploadDir . "\n");
+        return -1;
+    }
 }
 $dir = opendir($uploadDir);
 //$pics=dirname();
@@ -36,4 +42,5 @@ if ($pics[0] != '') {
 
     }
     echo 'Thumbs have been created!';
+    return 0;
 }
