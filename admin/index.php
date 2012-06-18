@@ -22,7 +22,7 @@ $sellerStatus = $row[0];
 		<tr><td><input type="text" name="newstext" /></td></tr>
 		<tr><td><input type="submit" name="submit" value="Post News" />
 	</table>
-</form
+</form>
 <?php require(LG_ROOT . DS . 'templates' . DS . 'footer.php'); ?>
 </body>
 </html>
