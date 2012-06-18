@@ -1,12 +1,13 @@
 <?php
 require('../adminautoload.php');
+$session->init('ADMIN');
+
 // Get list of users
+$db = DB::getInstance();
 $sql = "SELECT * FROM members";
-$result = mysql_query($sql);
-$users = array();
-while($row = mysql_fetch_assoc($result)) {
-	$users[] = $row;
-}
+$stmt = $db->prepare($sql);
+$stmt->execute();
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <html>
 <head>
@@ -15,9 +16,9 @@ while($row = mysql_fetch_assoc($result)) {
 <body>
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 <h1>User List</h1>
-		<?php if (isset($_SESSION['flash'])) : ?>
+		<?php if ($session->hasFlash()) : ?>
 		<p>
-			<?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?>
+			<?php echo $session->getFlash(); ?>
 		</p>
 		<?php endif; ?>
 <a href="create.php">Create New User</a>

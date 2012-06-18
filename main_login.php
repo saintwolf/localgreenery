@@ -1,13 +1,12 @@
 <?php 
-session_start();
-define('DS', DIRECTORY_SEPARATOR);
-define('LG_ROOT', __DIR__);
-require_once(LG_ROOT . DS . 'lib' . DS . 'db.php');
+require_once(__DIR__ . '/autoload.php');
+$session->init();
 
 // Get seller status from db
-$result = mysql_query("SELECT `value` FROM `options` WHERE `option` = 'status'") or die('Could not get options: ' . mysql_error());
-$row = mysql_fetch_array($result);
-$status = $row[0];
+$db = DB::getInstance();
+$stmt = $db->prepare("SELECT `value` FROM `options` WHERE `option` = 'status'");
+$stmt->execute();
+$status = $stmt->fetchColumn(0);
 
 ?>
 <!DOCTYPE html>
@@ -33,9 +32,9 @@ $status = $row[0];
 					<tr>
 						<td colspan="3"><strong>Member Login </strong></td>
 					</tr>
-					<?php if (isset($_SESSION['flash'])): ?>
+					<?php if ($session->hasFlash()): ?>
 					<tr>
-						<td colspan="3"><?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?></td>
+						<td colspan="3"><?php echo $session->getFlash(); ?></td>
 					</tr>
 					<?php endif; ?>
 					<tr>

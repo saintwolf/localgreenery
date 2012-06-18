@@ -1,34 +1,46 @@
 <?php
 require('../adminautoload.php');
+$session->init('ADMIN');
 
 // Check if form was sent
 if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Create Product')) {
-	$name = trim(mysql_real_escape_string($_POST['name']));
-	$type = trim(mysql_real_escape_string($_POST['type']));
-	$weight = trim(mysql_real_escape_string($_POST['weight']));
-	$price = trim(mysql_real_escape_string($_POST['price']));
-	$active = trim(mysql_real_escape_string($_POST['active']));
-	$imageUrl = trim(mysql_real_escape_string($_POST['image_url']));
+	$name = trim($_POST['name']);
+	$type = trim($_POST['type']);
+	$weight = trim($_POST['weight']);
+	$price = trim($_POST['price']);
+	$active = trim($_POST['active']);
+	$imageUrl = trim($_POST['image_url']);
 
 	// Some small validation+
-	$errors = 0;
+	$errorCount = 0;
+	$errors = array();
 	foreach ($_POST as $key => $value) {
-		if ($value == '' && ($key != 'image_url')) {
-			$_SESSION['flash'][] = $key . ' is empty.';
-			$errors++;
-		}
+	    if ($value == '' && ($key != 'image_url')) {
+	        $errors[] = $key . ' is empty.';
+	        $errorCount++;
+	    }
 	}
-	if ($errors == 0) {
-		$sql = "INSERT INTO products VALUES ('', '$name', '$type', '$weight', '$price', '$active', '$imageUrl')";
-		print $sql;
-		$result = mysql_query($sql);
-		if (mysql_affected_rows() > 0) {
-			$_SESSION['flash'] = 'Product Added';
+	if ($errorCount == 0) {
+	    $db = DB::getInstance();
+		$sql = "INSERT INTO products VALUES ('', :name, :type, :weight, :price, :active, :imageUrl)";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam(':name', $name);
+		$stmt->bindParam(':type', $type);
+		$stmt->bindParam(':weight', $weight);
+		$stmt->bindParam(':price', $price);
+		$stmt->bindParam(':imageUrl', $imageUrl);
+		$stmt->bindParam(':active', $active);
+		$stmt->execute();
+		
+		if ($stmt->rowCount() > 0) {
+			$session->setFlash('Product Added');
 			header('location:index.php');
+			exit;
 		} else {
-			$_SESSION['flash'] = 'Product not added for some reason.';
+			$session->setFlash('Product not added for some reason.');
 		}
 	} else {
+	    $session->setFlash($errors);
 		header('location:' . $_SERVER['PHP_SELF']);
 		exit;
 	}
@@ -40,18 +52,15 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Create Produc
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 			<fieldset>
 				<table>
-					<?php if (isset($_SESSION['flash'])
-		&& is_array($_SESSION['flash'])) : ?>
+					<?php if ($session->hasFlash() && is_array($session->getFlash())) : ?>
 					<ul>
-						<?php foreach ($_SESSION['flash'] as $error) : ?>
+						<?php foreach ($session->getFlash() as $error) : ?>
 						<li><?php echo $error; ?></li>
 						<?php endforeach; ?>
-						<?php unset($_SESSION['flash']); ?>
 					</ul>
-					<?php elseif (isset($_SESSION['flash'])) : ?>
+					<?php elseif ($session->hasFlash()) : ?>
 					<tr>
-						<td colspan="2"><?php echo $_SESSION['flash'];
-	unset($_SESSION['flash']); ?></td>
+						<td colspan="2"><?php echo $session->getFlash(); ?></td>
 					</tr>
 					<?php endif; ?>
 					<tr>

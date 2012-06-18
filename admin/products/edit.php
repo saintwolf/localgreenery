@@ -1,41 +1,52 @@
 <?php
 require('../adminautoload.php');
+$session->init('ADMIN');
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     // Get the details from the db
-    $id = mysql_real_escape_string($_GET['id']);
-    $sql = "SELECT * FROM products WHERE id = '$id'";
-    $result = mysql_query($sql);
-    if (mysql_num_rows($result) > 0) {
-        $product = mysql_fetch_assoc($result);
+    $db = DB::getInstance();
+    $sql = "SELECT * FROM products WHERE id = :id";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':id', $_GET['id']);
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+        $product = $stmt->fetch(PDO::FETCH_ASSOC);
     } else {
-        $_SESSION['flash'] = 'User not found';
+        $session->setFlash('User not found');
         header('location:index.php');
         exit;
     }
+} else {
+    $session->setFlash('No product specified');
+    header('location:index.php');
+    exit;
 }
 
 // Check if form was sent
 if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Product')) {
-	$name = mysql_real_escape_string($_POST['name']);
-	$type = mysql_real_escape_string($_POST['type']);
-	$weight = mysql_real_escape_string($_POST['weight']);
-	$price = mysql_real_escape_string($_POST['price']);
-	$active = mysql_real_escape_string($_POST['active']);
-	$imageUrl = mysql_real_escape_string($_POST['image_url']);
-	$productId = mysql_real_escape_string($_GET['id']);
-
-		$sql = "UPDATE products SET "
-				. ($name != '' ? "`name` = '$name', " : '')
-				. ($type != '' ? "`type` = '$type', " : '')
-				. ($weight != '' ? "`weight` = '$weight', " : '')
-				. ($price != '' ? "`price` = '$price', " : '')
-				. ("`image_url` = '$imageUrl', ")
-				. ($active != '' ? "`active` = '$active' " : '')
-				. "WHERE `id` = '$productId'";
-		$result = mysql_query($sql);
-		if (mysql_affected_rows() > 0) {
-			$_SESSION['flash'] = 'User Modified';
+	$name = trim($_POST['name']) == '' ? $product['name'] : $_POST['name'];
+	$type = trim($_POST['type']) == '' ? $product['type'] : $_POST['type'];
+	$weight = trim($_POST['weight']) == '' ? $product['weight'] : $_POST['weight'];
+	$price = trim($_POST['price']) == '' ? $product['price'] : $_POST['price'];
+	$active = trim($_POST['active']) == '' ? $product['active'] : $_POST['active'];
+	$imageUrl = trim($_POST['image_url']) == '' ? $product['image_url'] : $_POST['image_url'];
+	$productId = $_GET['id'];
+	
+	// Don't care about conflicting names here.
+        $db = DB::getInstance();
+		$sql = "UPDATE `products` SET `name` = :name, `type` = :type, `weight` = :weight, `price` = :price, `image_url` = :imageUrl, `active` = :active WHERE `id` = :productId";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam(':name', $name);
+		$stmt->bindParam(':type', $type);
+		$stmt->bindParam(':weight', $weight);
+		$stmt->bindParam(':price', $price);
+		$stmt->bindParam(':imageUrl', $imageUrl);
+		$stmt->bindParam(':active', $active);
+		$stmt->bindParam(':productId', $productId);
+		$stmt->execute();
+		
+		if ($stmt->rowCount() > 0) {
+			$session->setFlash('User Modified');
 			header('location:index.php');
 			exit;
 		}
@@ -47,18 +58,15 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 		<form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $_GET['id']; ?>" method="post">
 			<fieldset>
 				<table>
-					<?php if (isset($_SESSION['flash'])
-		&& is_array($_SESSION['flash'])) :
-					?>
+						<?php if ($session->hasFlash() && is_array($session->getFlash())) : ?>
 					<ul>
-						<?php foreach ($_SESSION['flash'] as $error) : ?>
+						<?php foreach ($session->getFlash() as $error) : ?>
 						<li><?php echo $error; ?></li>
 						<?php endforeach; ?>
-						<?php unset($_SESSION['flash']); ?>
 					</ul>
-					<?php elseif (isset($_SESSION['flash'])) : ?>
+					<?php elseif ($session->hasFlash()) : ?>
 					<tr>
-						<td colspan="2"><?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?></td>
+						<td colspan="2"><?php echo $session->getFlash(); ?></td>
 					</tr>
 					<?php endif; ?>
 					<tr>

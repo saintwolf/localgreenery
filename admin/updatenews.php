@@ -1,28 +1,34 @@
 <?php
 require_once('adminautoload.php');
+$session->init('ADMIN');
 
 if (isset($_POST['submit'])) {
-    $_POST['newstext'] = mysql_real_escape_string($_POST['newstext']);
-	if ($_POST['newstext'] != '') {
+    $newsText = trim($_POST['newstext']);
+	if ($newsText != '') {
 		// Post the new status
-		$sql = "INSERT INTO news VALUES ('', '" . $_POST['newstext'] . "', " . $_SESSION['user']['id'] . ", " . time() . ")" ;
-		$result = mysql_query($sql);
-		if (mysql_affected_rows() == 1) {
-			$_SESSION['flash'] = 'News added!';
+		$db = DB::getInstance();
+		$sql = "INSERT INTO news VALUES ('', :newsText, :userId, :time)";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam(':newsText', $newsText);
+		$stmt->bindParam(':userId', $_SESSION['user']['id']);
+		$stmt->bindValue(':time', time());
+		$stmt->execute();
+		if ($stmt->rowCount() == 1) {
+			$session->setFlash('News added!');
 			header('location:/admin/index.php');
 			exit;
 		} else {
-			$_SESSION['flash'] = mysql_error();
+			$session->setFlash('Something wrong happened. Contact the admin');
 			header('location:/admin/index.php');
 			exit;
 		}
 	} else {
-		$_SESSION['flash'] = 'You need to put something in the news post';
+		$session->setFlash('You need to put something in the news post');
 		header('location:/admin/index.php');
 		exit;
 	}
 } else {
-	$_SESSION['flash'] = 'You didn\'t submit the form properly!';
+	$session->setFlash('You didn\'t submit the form properly!');
 	header('location:/admin/index.php');
 	exit;
 }

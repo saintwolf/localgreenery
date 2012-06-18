@@ -1,16 +1,23 @@
 <?php
-include ('lib/autoload.php');
+include ('autoload.php');
+$session->init('USER');
+
 
 if (!isset($_GET['id']) OR !is_numeric($_GET['id'])) {
 	die('id is not set or not a number!');
 }
 $productId = $_GET['id'];
-$sql = "SELECT * FROM products WHERE id = $productId";
-$result = mysql_query($sql);
-if (mysql_num_rows($result) < 1) {
-	die ("Invalid Product specified");
+$db = DB::getInstance();
+$sql = "SELECT * FROM products WHERE id = :productId";
+$stmt = $db->prepare($sql);
+$stmt->bindParam(':productId', $productId);
+$stmt->execute();
+if ($stmt->rowCount() < 1) {
+	$session->setFlash("Invalid Product specified for enquiry!");
+	header('location:/index.php');
+	exit;
 }
-$product = mysql_fetch_assoc($result);
+$product = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 		<h1>Enquiry for <?php echo $product['name'] ?></h1>

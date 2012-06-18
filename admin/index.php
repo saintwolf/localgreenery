@@ -1,10 +1,12 @@
 <?php
 include('adminautoload.php');
+$session->init('ADMIN');
 // Get the seller status
+$db = DB::getInstance();
 $sql = "SELECT `value` FROM options WHERE `option` = 'status'";
-$result = mysql_query($sql);
-$row = mysql_fetch_array($result);
-$sellerStatus = $row[0];
+$stmt = $db->prepare($sql);
+$stmt->execute();
+$sellerStatus = $stmt->fetchColumn(0);
 ?>
 <?php require(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 <h1>LocalGreenery - Admin Menu</h1>
@@ -22,7 +24,7 @@ $sellerStatus = $row[0];
 		<tr><td><input type="text" name="newstext" /></td></tr>
 		<tr><td><input type="submit" name="submit" value="Post News" />
 	</table>
-</form
+</form>
 <?php require(LG_ROOT . DS . 'templates' . DS . 'footer.php'); ?>
 </body>
 </html>

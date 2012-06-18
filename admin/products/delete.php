@@ -1,18 +1,24 @@
 <?php
 require('../adminautoload.php');
+$session->init('ADMIN');
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-	$productId = mysql_real_escape_string($_GET['id']);
-	$sql = "DELETE FROM products WHERE id = '$productId'";
-	$result = mysql_query($sql);
-	if (mysql_affected_rows() > 0) {
-		$_SESSION['flash'] = 'Product Deleted';
-		header('location:index.php');
+	$db = DB::getInstance();
+	$sql = "DELETE FROM products WHERE id = :productId";
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam(':productId', $_GET['id']);
+	$stmt->execute();
+	if ($stmt->rowCount() > 0) {
+	    $session->setFlash('Product Deleted');
+	    header('location:index.php');
+	    exit;
 	} else {
-		$_SESSION['flash'] = 'Product Id not found';
-		header('location:index.php');
+	    $session->setFlash('Product Id not found!');
+	    header('location:index.php');
+	    exit;
 	}
 } else {
-	$_SESSION['flash'] = 'Invalid or non-existent product id';
+	$session->setFlash('Invalid or non-existent product id');
 	header('location:index.php');
+	exit;
 }

@@ -1,38 +1,52 @@
 <?php
 require('../adminautoload.php');
+$session->init('ADMIN');
 
 // Check if form was sent
 if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
-	$username = trim(mysql_real_escape_string($_POST['username']));
-	$password = md5(mysql_real_escape_string($_POST['password']));
-	$role = trim(mysql_real_escape_string($_POST['role']));
-	$banned = trim(mysql_real_escape_string($_POST['banned']));
+	$username = trim($_POST['username']);
+	$password = md5($_POST['password']);
+	$role = trim($_POST['role']);
+	$banned = trim($_POST['banned']);
 
 	// Some small validation+
-	$errors = 0;
+	$errorCount = 0;
+	$errors = array();
 	foreach ($_POST as $key => $value) {
 		if ($value == '') {
-			$_SESSION['flash'][] = $key . ' is empty.';
-			$errors++;
+			$errors[] = $key . ' is empty.';
+			$errorCount++;
 		}
 	}
-	if ($errors == 0) {
+	
+	if ($errorCount == 0) {
 		// See if there is a conflicting username
-		$sql = "SELECT * FROM members WHERE username = '$username'";
-		$result = mysql_query($sql);
-		if (mysql_num_rows($result) == 0) {
-			$sql = "INSERT INTO members VALUES ('', '$username', '$password', '$role', '$banned')";
-			$result = mysql_query($sql);
-			if (mysql_affected_rows() > 0) {
-				$_SESSION['flash'] = 'User Added';
+		$db = DB::getInstance();
+		$sql = "SELECT * FROM members WHERE username = :username";
+		$stmt = $db->prepare($sql);
+		$stmt->bindParam(':username', $username);
+		$stmt->execute();
+		if ($stmt->rowCount() == 0) {
+			$sql = "INSERT INTO members VALUES ('', :username, :password, :role, :banned)";
+			$stmt = $db->prepare($sql);
+			$stmt->bindParam(':username', $username);
+			$stmt->bindParam(':password', $password);
+			$stmt->bindParam(':role', $role);
+			$stmt->bindParam(':banned', $banned);
+			$stmt->execute();
+			
+			if ($stmt->rowCount() > 0) {
+				$session->setFlash('User Added');
 				header('location:index.php');
+				exit;
 			} else {
-				$_SESSION['flash'] = 'User not added for some reason.';
+				$session->setFlash('User not added for some reason.');
 			}
 		} else {
-			$_SESSION['flash'] = 'Username in use';
+			$session->setFlash('Username in use');
 		}
 	} else {
+	    $session->setFlash($errors);
 		header('location:' . $_SERVER['PHP_SELF']);
 		exit;
 	}
@@ -44,16 +58,15 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 			<fieldset>
 				<table>
-					<?php if (isset($_SESSION['flash']) && is_array($_SESSION['flash'])) : ?>
+					<?php if ($session->hasFlash() && is_array($session->getFlash())) : ?>
 					<ul>
-						<?php foreach ($_SESSION['flash'] as $error) : ?>
+						<?php foreach ($session->getFlash() as $error) : ?>
 						<li><?php echo $error; ?></li>
 						<?php endforeach; ?>
-						<?php unset($_SESSION['flash']); ?>
 					</ul>
-					<?php elseif (isset($_SESSION['flash'])) : ?>
+					<?php elseif ($session->hasFlash()) : ?>
 					<tr>
-						<td colspan="2"><?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?></td>
+						<td colspan="2"><?php echo $session->getFlash(); ?></td>
 					</tr>
 					<?php endif; ?>
 					<tr>
