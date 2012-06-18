@@ -88,6 +88,11 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 						<td><label for="image_url">Image URL: </label></td>
 						<td><input type="text" name="image_url" value="<?php echo $product['image_url']; ?>"/></td>
 					</tr>
+					<?php if ($product['image_url'] != '') :?>
+					<tr>
+					    <td colspan="2"><img src="/uploads/thumbs/tn_<?php echo $product['image_url']; ?>" alt="<?php echo $product['name']; ?>" /></td>
+					</tr>
+					<?php endif; ?>
 				</table>
 			</fieldset>
 			<input type="submit" name="createproduct" value="Modify Product" />
