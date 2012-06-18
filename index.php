@@ -1,6 +1,5 @@
-
 <?php
-include ('lib/autoload.php');
+include ('autoload.php');
 $session->init('USER');
 
 // Fetch the products from the database
@@ -32,7 +31,7 @@ $news = $stmt->fetch(PDO::FETCH_ASSOC);
 <?php endif; ?>
 <div class="products">
 <h2>Products</h2>
-<?php if (mysql_num_rows($result) > 0): ?>
+<?php if ($stmt->rowCount() > 0): ?>
 <?php foreach ($products as $product): ?>
 				<ul>
 					<li><h3><?php echo $product['name']?></h3></li>

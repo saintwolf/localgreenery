@@ -1,18 +1,24 @@
 <?php
 include('adminautoload.php');
+$session->init('ADMIN');
 // Get status first
-$sql = "SELECT * FROM options WHERE `option` = 'status'";
-$result = mysql_query($sql);
-$row = mysql_fetch_assoc($result);
+$db = DB::getInstance();
+$sql = "SELECT `value` FROM options WHERE `option` = 'status'";
+$stmt = $db->prepare($sql);
+$stmt->execute();
+$status = $stmt->fetchColumn(0);
 
-if ($row['value'] == "Available") {
+if ($status == "Available") {
 	$sql = "UPDATE options SET `value` = 'Unavailable' WHERE `option` = 'status'";
-	$result = mysql_query($sql) or die(mysql_error());
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
 	header('location:index.php');
+	exit;
 } else {
 	$sql = "UPDATE options SET `value` = 'Available' WHERE `option` = 'status'";
-	$result = mysql_query($sql);
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
 	header('location:index.php');
+	exit;
 }
 ?>
-Hi

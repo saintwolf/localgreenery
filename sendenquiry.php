@@ -1,5 +1,6 @@
 <?php
 include ('lib/autoload.php');
+$session->init('USER');
 
 // Check the form has been submitted, die otherwise
 if ($_POST['enquirysubmit'] != 'Submit Enquiry') {

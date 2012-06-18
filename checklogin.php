@@ -1,33 +1,29 @@
 <?php
-session_start();
-define('LG_ROOT', dirname(__FILE__));
-define('DS', DIRECTORY_SEPARATOR);
-require_once(__DIR__ . DS . 'lib' . DS . 'db.php');
+require_once(__DIR__ . '/autoload.php');
+$session->init();
+
 // username and password sent from form 
 $myusername = $_POST['myusername'];
 $mypassword = $_POST['mypassword'];
 
-// To protect MySQL injection (more detail about MySQL injection)
-$myusername = stripslashes($myusername);
-$mypassword = stripslashes($mypassword);
-$myusername = mysql_real_escape_string($myusername);
-$mypassword = mysql_real_escape_string($mypassword);
 $mypassword = md5($mypassword);
-$sql = "SELECT * FROM members WHERE username='$myusername' and password='$mypassword'";
-$result = mysql_query($sql);
+
+$db = DB::getInstance();
+$stmt = $db->prepare("SELECT * FROM members WHERE username=:username and password=:password");
+$stmt->bindParam(':username', $myusername);
+$stmt->bindParam(':password', $mypassword);
+$stmt->execute();
 
 // Mysql_num_row is counting table row
-$count = mysql_num_rows($result);
 
 // If result matched $myusername and $mypassword, table row must be 1 row
-if ($count == 1) {
+if ($stmt->rowCount() == 1) {
 	// Register user to session and redirect to file "login_success.php" 
-	$user = array();
-	$user = mysql_fetch_assoc($result);
-	$_SESSION['user'] = $user;
+	$_SESSION['user'] = $stmt->fetch(PDO::FETCH_ASSOC);
 	header("location:/index.php");
+	exit;
 } else {
-	$_SESSION['flash'] = "Wrong Username or Password";
+	$session->setFlash("Wrong Username or Password");
 	header('location:/main_login.php');
 	exit;
 }

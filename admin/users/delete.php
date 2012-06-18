@@ -1,18 +1,24 @@
 <?php
 require('../adminautoload.php');
+$session->init('ADMIN');
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-	$userId = mysql_real_escape_string($_GET['id']);
-	$sql = "DELETE FROM members WHERE id = '$userId'";
-	$result = mysql_query($sql);
-	if (mysql_affected_rows() > 0) {
-		$_SESSION['flash'] = 'User Deleted';
-		header('location:index.php');
+	$db = DB::getInstance();
+	$sql = "DELETE FROM members WHERE id = :userId";
+	$stmt = $db->prepare($sql);
+	$stmt->bindParam(':userId', $_GET['id']);
+	$stmt->execute();
+	if ($stmt->rowCount() > 0) {
+	    $session->setFlash('User Deleted');
+	    header('location:index.php');
+	    exit;
 	} else {
-		$_SESSION['flash'] = 'User Id not found';
-		header('location:index.php');
+	    $session->setFlash('User Id not found!');
+	    header('location:index.php');
+	    exit;
 	}
 } else {
-	$_SESSION['flash'] = 'Invalid or non-existent user id';
+	$session->setFlash('Invalid or non-existent user id');
 	header('location:index.php');
+	exit;
 }
