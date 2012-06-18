@@ -1,20 +1,19 @@
 
 <?php
 include ('lib/autoload.php');
+$session->init('USER');
 
 // Fetch the products from the database
 $sql = "SELECT * FROM products WHERE `active` = 'Y'";
-$result = mysql_query($sql, $conn);
-
-$products = array();
-while ($row = mysql_fetch_assoc($result)) {
-	$products[] = $row;
-}
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Get the news from the db
 $sql = "SELECT `news`.*, `members`.`username` FROM `news` INNER JOIN `members` ON `news`.`user_id`=`members`.`id` ORDER BY `news`.`created_at` DESC LIMIT 1";
-$result = mysql_query($sql);
-$news = mysql_fetch_assoc($result);
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$news = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
@@ -26,9 +25,9 @@ $news = mysql_fetch_assoc($result);
     <li id="newsfooter">Posted <?php echo ago($news['created_at']); ?> by <?php echo $news['username'];?></li>
 </ul>
 </div>
-<?php if (isset($_SESSION['flash'])): ?>
+<?php if ($session->hasFlash()): ?>
 <ul>
-	<li><strong><?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?></strong></li>
+	<li><strong><?php echo $session->getFlash(); ?></strong></li>
 </ul>
 <?php endif; ?>
 <div class="products">
