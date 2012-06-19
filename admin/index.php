@@ -11,9 +11,10 @@ $sellerStatus = $stmt->fetchColumn(0);
 <?php require(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 <h1>LocalGreenery - Admin Menu</h1>
 <ul>
-	<li>Current Status: <a href="changestatus.php"><?php echo $sellerStatus; ?></a></li>
+    <li><a href="enquiries/">Enquiries</a></li>
 	<li><a href="users/">Users</a></li>
 	<li><a href="products/">Products</a></li>
+	<li>Current Status: <a href="changestatus.php"><?php echo $sellerStatus; ?></a></li>
 </ul>
 <form class="newsform" action="updatenews.php" method="post">
 	<table>

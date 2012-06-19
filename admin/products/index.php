@@ -8,13 +8,9 @@ $sql = "SELECT * FROM products";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+require(LG_ROOT . DS . 'templates' . DS . 'header.php'); 
 ?>
-<html>
-<head>
-<title>User List</title>
-</head>
-<body>
-<?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 <h1>Product List</h1>
 		<?php if ($session->hasFlash()) : ?>
 		<p>
