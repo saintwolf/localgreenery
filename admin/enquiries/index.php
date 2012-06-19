@@ -22,8 +22,8 @@ require(LG_ROOT . DS . 'templates' . DS . 'header.php');
 <table>
     <thead>
         <tr>
-            <td>Product</td>
             <td>Username</td>
+            <td>Product</td>
             <td>Time</td>
             <td>View</td>
         </tr>            
@@ -31,8 +31,8 @@ require(LG_ROOT . DS . 'templates' . DS . 'header.php');
     <tbody>
         <?php foreach($enquiries as $enquiry): ?>
         <tr>
-            <td><?php echo $enquiry['productname']; ?></td>
             <td><?php echo $enquiry['username']; ?></td>
+            <td><?php echo $enquiry['productname']; ?></td>
             <td><?php echo ago($enquiry['time']); ?></td>
             <td><button onClick="parent.location='view.php?id=<?php echo $enquiry['id']; ?>'">View</button></td>
         </tr>
