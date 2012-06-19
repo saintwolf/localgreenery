@@ -28,7 +28,11 @@ $product = $stmt->fetch(PDO::FETCH_ASSOC);
 			    <?php if ($session->hasFlash()): ?>
 			    <p><?php echo $session->getFlash(); ?></p>
 			    <?php endif; ?>
-			    <p><strong>PLEASE NOTE</strong><br />Enquiries can be read by all administrators and are intended for the sole purpose of making a product enquiry. Any repeated misuse of the system may result in an account ban!</p>
+			    <p>
+			        <strong>PLEASE NOTE</strong><br />
+			        Enquiries can be read by all administrators and are intended for the sole purpose of making a product enquiry. Any repeated misuse of the system may result in an account ban!<br />
+			        If you need to contact an administrator, please e-mail them directly.
+			    </p>
 				<label for="message">Message (Optional):</label><br />
 				<textarea name="message" >Enter an optional message to the seller here.</textarea>
 			</fieldset>
