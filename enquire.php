@@ -34,7 +34,7 @@ $product = $stmt->fetch(PDO::FETCH_ASSOC);
 			        If you need to contact an administrator, please e-mail them directly.
 			    </p>
 				<label for="message">Message (Optional):</label><br />
-				<textarea name="message" >Enter an optional message to the seller here.</textarea>
+				<textarea name="message" placeholder="Enter an optional message to the seller here."></textarea>
 			</fieldset>
 			<input type="submit" name="enquirysubmit" value="Submit Enquiry" />
 		</form>
