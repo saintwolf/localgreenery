@@ -7,6 +7,12 @@ $sql = "SELECT `value` FROM options WHERE `option` = 'status'";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 $sellerStatus = $stmt->fetchColumn(0);
+
+// Get a list of active users
+$sql = "SELECT * FROM `members` WHERE `last_active` > UNIX_TIMESTAMP() - 600";
+$stmt = $db->prepare($sql);
+$stmt->execute();
+$activeUsers = $stmt->fetchAll();
 ?>
 <?php require(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 <h1>LocalGreenery - Admin Menu</h1>
@@ -26,6 +32,27 @@ $sellerStatus = $stmt->fetchColumn(0);
 		<tr><td><input type="submit" name="submit" value="Post News" />
 	</table>
 </form>
+<br />
+<table>
+	<thead>
+		<tr>
+			<td colspan="2">Online Users (Active in the last 10 min)</td>
+		</tr>
+		<tr>
+			<td>User</td>
+			<td>Last Active</td>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($activeUsers as $user): ?>
+		<tr>
+			<td><?php echo $user['username'];?></td>
+			<td><?php echo ago($user['last_active']);?></td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+</table>
+<br />
 <?php require(LG_ROOT . DS . 'templates' . DS . 'footer.php'); ?>
 </body>
 </html>

@@ -38,9 +38,7 @@ class Session
             }
             // Now check if the user is banned
             if ($this->user['banned'] == 'Y') {
-                $this
-                        ->setFlash(
-                                'You are banned. Please contact the webmaster.');
+                $this->setFlash('You are banned. Please contact the webmaster.');
                 unset($_SESSION['user']);
                 header('location:/main_login.php');
                 exit;
@@ -51,6 +49,7 @@ class Session
                     header('location:/main_login.php');
                     exit;
             }
+            $this->updateUserActivity();
         }
     }
     
@@ -99,6 +98,16 @@ class Session
     public function setFlash($flash)
     {
         $_SESSION['flash'] = $flash;
+    }
+    
+    public function updateUserActivity()
+    {
+    	$db = DB::getInstance();
+    	$sql = "UPDATE `members` SET `last_active` = :time WHERE `id` = :id";
+    	$stmt = $db->prepare($sql);
+    	$stmt->bindValue(':time', time());
+    	$stmt->bindParam(':id', $this->user['id']);
+    	$stmt->execute();
     }
 }
 
