@@ -9,7 +9,7 @@ $stmt->execute();
 $sellerStatus = $stmt->fetchColumn(0);
 
 // Get a list of active users
-$sql = "SELECT * FROM `members` WHERE `last_active` > UNIX_TIMESTAMP() - 600";
+$sql = "SELECT * FROM `members` WHERE `last_active` > UNIX_TIMESTAMP() - (600 * 12)";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 $activeUsers = $stmt->fetchAll();
@@ -36,7 +36,7 @@ $activeUsers = $stmt->fetchAll();
 <table>
 	<thead>
 		<tr>
-			<td colspan="2">Online Users (Active in the last 10 min)</td>
+			<td colspan="2">Online Users (Active in the last hour)</td>
 		</tr>
 		<tr>
 			<td>User</td>
