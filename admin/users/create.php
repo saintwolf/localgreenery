@@ -27,7 +27,7 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Create User')) {
 		$stmt->bindParam(':username', $username);
 		$stmt->execute();
 		if ($stmt->rowCount() == 0) {
-			$sql = "INSERT INTO members VALUES ('', :username, :password, :role, :banned)";
+			$sql = "INSERT INTO members VALUES ('', :username, :password, :role, :banned, '')";
 			$stmt = $db->prepare($sql);
 			$stmt->bindParam(':username', $username);
 			$stmt->bindParam(':password', $password);
