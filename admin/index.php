@@ -9,7 +9,8 @@ $stmt->execute();
 $sellerStatus = $stmt->fetchColumn(0);
 
 // Get a list of active users
-$sql = "SELECT * FROM `members` WHERE `last_active` > UNIX_TIMESTAMP() - (600 * 12)";
+$sql = "SELECT * FROM `members` ORDER BY `last_active` DESC LIMIT 5";
+// $sql = "SELECT * FROM `members` WHERE `last_active` > UNIX_TIMESTAMP() - (600 * 12)";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 $activeUsers = $stmt->fetchAll();
@@ -25,7 +26,7 @@ $activeUsers = $stmt->fetchAll();
 <form class="newsform" action="updatenews.php" method="post">
 	<table>
 	<?php if (isset($_SESSION['flash'])): ?>
-		<tr><td><?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?>
+		<tr><td><?php echo $_SESSION['flash']; unset($_SESSION['flash']); ?></td></tr>
 	<?php endif; ?>
 		<tr><td>Post news:</td></tr>
 		<tr><td><input type="text" name="newstext" /></td></tr>
@@ -36,7 +37,7 @@ $activeUsers = $stmt->fetchAll();
 <table>
 	<thead>
 		<tr>
-			<td colspan="2">Online Users (Active in the last hour)</td>
+			<td colspan="2">Last 5 active users</td>
 		</tr>
 		<tr>
 			<td>User</td>
