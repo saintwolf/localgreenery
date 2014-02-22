@@ -26,7 +26,7 @@ $news = $stmt->fetch(PDO::FETCH_ASSOC);
 </div>
 <?php if ($session->hasFlash()): ?>
 <ul>
-	<li><strong><?php echo $session->getFlash(); ?></strong></li>
+	<li class="bg-warning"><strong><?php echo $session->getFlash(); ?></strong></li>
 </ul>
 <?php endif; ?>
 <div class="products">

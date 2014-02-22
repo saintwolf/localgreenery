@@ -67,7 +67,7 @@ if (isset($_POST['createuser']) && ($_POST['createuser'] == 'Modify User')) {
 					<?php if ($session->hasFlash() && is_array($session->getFlash())) : ?>
 					<ul>
 						<?php foreach ($session->getFlash() as $error) : ?>
-						<li><?php echo $error; ?></li>
+						<li class="bg-warning"><?php echo $error; ?></li>
 						<?php endforeach; ?>
 					</ul>
 					<?php elseif ($session->hasFlash()) : ?>

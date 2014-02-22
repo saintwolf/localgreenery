@@ -57,11 +57,18 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 		<strong>WARNING: THIS FORM IS NOT VALIDATED. ANYTHING YOU INPUT WILL BE SENT!</strong>
 		<form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $_GET['id']; ?>" method="post">
 			<fieldset>
+            
+            	<?php
+					echo '<pre>';
+					print_r($product);
+					echo '</pre>';
+				?>
+            
 				<table>
 						<?php if ($session->hasFlash() && is_array($session->getFlash())) : ?>
 					<ul>
 						<?php foreach ($session->getFlash() as $error) : ?>
-						<li><?php echo $error; ?></li>
+						<li class="bg-warning"><?php echo $error; ?></li>
 						<?php endforeach; ?>
 					</ul>
 					<?php elseif ($session->hasFlash()) : ?>
@@ -88,8 +95,7 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 					<tr>
 						<td><label for="active">Active: </label></td>
 						<td>
-							<input type="radio" name="active" value="Y" <?php if ($product['active'] == 'Y') echo 'checked="checked"'?> /> Y<br />
-							<input type="radio" name="active" value="N" <?php if ($product['active'] == 'N') echo 'checked="checked"'?> /> N
+							<input type="checkbox" value="Y" name="active" <?php echo ($product['active'] == 'Y') ? 'checked':''; ?> />
 						</td>
 					</tr>
 					<tr>

@@ -18,7 +18,10 @@
   </head>
   <body>
   
-<div class="appcontainer">
-Seller is <strong><?php echo $options['status']['value']; ?></strong><br />
-You are logged in as <?php echo $session->user['username']; ?><br />
-<a href="/Logout.php">Logout</a> - <a href="/changepassword.php">Change Password</a><br />
+<div class="container-fluid">
+  <div class="row">
+  
+  <div class="col-md-12">
+    Seller is <strong><?php echo $options['status']['value']; ?></strong><br />
+    You are logged in as <?php echo $session->user['username']; ?><br />
+    <a href="/Logout.php">Logout</a> - <a href="/changepassword.php">Change Password</a><br />

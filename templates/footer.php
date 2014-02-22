@@ -1,6 +1,11 @@
 
-	<a href="/index.php">Home</a><?php if($session->user['role'] == "ADMIN") echo ' - <a href="/admin/">Admin Menu</a>'; ?>
-	<br />Powered by LocalGreenery &copy; 2012 - <?php echo date('Y'); ?> Mash-Heads.
+	</div>
+    <div class="col-md-12">
+
+		<a href="/index.php">Home</a><?php if($session->user['role'] == "ADMIN") echo ' - <a href="/admin/">Admin Menu</a>'; ?>
+		<br />Powered by LocalGreenery &copy; 2012 - <?php echo date('Y'); ?> Mash-Heads.
+	
+    </div>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
