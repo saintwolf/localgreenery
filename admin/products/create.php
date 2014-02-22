@@ -30,14 +30,15 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Create Produc
 		$stmt->bindParam(':price', $price);
 		$stmt->bindParam(':imageUrl', $imageUrl);
 		$stmt->bindParam(':active', $active);
-		$stmt->execute();
-		
-		if ($stmt->rowCount() > 0) {
+	
+		if ($stmt->execute()) {
 			$session->setFlash('Product Added');
 			header('location:index.php');
 			exit;
 		} else {
 			$session->setFlash('Product not added for some reason.');
+			header('location:index.php');
+			exit;
 		}
 	} else {
 	    $session->setFlash($errors);

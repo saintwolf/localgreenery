@@ -44,10 +44,6 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 		$stmt->bindParam(':imageUrl', $imageUrl);
 		$stmt->bindParam(':active', $product['active']);
 		$stmt->bindParam(':productId', $productId);
-		
-		echo '<pre>';
-			print_r($stmt);
-		echo '</pre>';
 
 		if ($stmt->execute()) {
 			$session->setFlash('Product Modified');
