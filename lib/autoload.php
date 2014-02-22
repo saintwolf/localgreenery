@@ -1,4 +1,7 @@
 <?php
+session_start();
+ob_start();
+
 define('LG_ROOT', dirname(__DIR__));
 define('DS', '/');
 

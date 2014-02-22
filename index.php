@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 include ('autoload.php');
 $session->init('USER');
 
