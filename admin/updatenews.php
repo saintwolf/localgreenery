@@ -7,13 +7,13 @@ if (isset($_POST['submit'])) {
 	if ($newsText != '') {
 		// Post the new status
 		$db = DB::getInstance();
-		$sql = "INSERT INTO news VALUES ('', :newsText, :userId, :time)";
+		$sql = "INSERT INTO news VALUES ('', ':newsText', ':userId', ':time')";
 		$stmt = $db->prepare($sql);
 		$stmt->bindParam(':newsText', $newsText);
 		$stmt->bindParam(':userId', $_SESSION['user']['id']);
 		$stmt->bindValue(':time', time());
-		$stmt->execute();
-		if ($stmt->rowCount() == 1) {
+
+		if ($stmt->execute()) {
 			$session->setFlash('News added!');
 			header('location:/admin/index.php');
 			exit;

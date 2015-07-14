@@ -16,11 +16,9 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 <h1>User List</h1>
-		<?php if ($session->hasFlash()) : ?>
-		<p>
-			<?php echo $session->getFlash(); ?>
-		</p>
-		<?php endif; ?>
+	<?php if ($session->hasFlash()) : ?>
+    <p class="bg-warning"><?php echo $session->getFlash(); ?></p>
+    <?php endif; ?>
 <a href="create.php">Create New User</a>
 <table>
 	<thead>

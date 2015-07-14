@@ -8,7 +8,7 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Create Produc
 	$type = trim($_POST['type']);
 	$weight = trim($_POST['weight']);
 	$price = trim($_POST['price']);
-	$active = trim($_POST['active']);
+	$active = ($_POST['active'] == 'Y') ? trim($_POST['active']):'N';
 	$imageUrl = trim($_POST['image_url']);
 
 	// Some small validation+
@@ -30,14 +30,15 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Create Produc
 		$stmt->bindParam(':price', $price);
 		$stmt->bindParam(':imageUrl', $imageUrl);
 		$stmt->bindParam(':active', $active);
-		$stmt->execute();
-		
-		if ($stmt->rowCount() > 0) {
+	
+		if ($stmt->execute()) {
 			$session->setFlash('Product Added');
 			header('location:index.php');
 			exit;
 		} else {
 			$session->setFlash('Product not added for some reason.');
+			header('location:index.php');
+			exit;
 		}
 	} else {
 	    $session->setFlash($errors);
@@ -55,7 +56,7 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Create Produc
 					<?php if ($session->hasFlash() && is_array($session->getFlash())) : ?>
 					<ul>
 						<?php foreach ($session->getFlash() as $error) : ?>
-						<li><?php echo $error; ?></li>
+						<li class="bg-warning"><?php echo $error; ?></li>
 						<?php endforeach; ?>
 					</ul>
 					<?php elseif ($session->hasFlash()) : ?>
@@ -82,8 +83,7 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Create Produc
 					<tr>
 						<td><label for="active">Active: </label></td>
 						<td>
-							<input type="radio" name="active" value="Y" checked="checked" /> Y<br />
-							<input type="radio" name="active" value="N" /> N
+							<input type="checkbox" value="Y" name="active" />
 						</td>
 					</tr>
 					<tr>

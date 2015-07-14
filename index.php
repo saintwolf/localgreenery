@@ -11,12 +11,19 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Get the news from the db
 $sql = "SELECT `news`.*, `members`.`username` FROM `news` INNER JOIN `members` ON `news`.`user_id`=`members`.`id` ORDER BY `news`.`created_at` DESC LIMIT 1";
 $stmt = $pdo->prepare($sql);
-$stmt->execute();
-$news = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if($stmt->execute()){
+	$news = $stmt->fetch(PDO::FETCH_ASSOC);
+	$newsstatus = true;
+}else{
+	$newsstatus = false;	
+}
 
 ?>
 <?php include(LG_ROOT . DS . 'templates' . DS . 'header.php'); ?>
 <h1>Welcome to Local Greenery</h1>
+
+<?php if($newsstatus): ?>
 <div class="newsbar">
 <ul>
     <li><h4>Latest News</h4></li>
@@ -24,14 +31,15 @@ $news = $stmt->fetch(PDO::FETCH_ASSOC);
     <li id="newsfooter">Posted <?php echo ago($news['created_at']); ?> by <?php echo $news['username'];?></li>
 </ul>
 </div>
+<?php endif; ?>
 <?php if ($session->hasFlash()): ?>
 <ul>
-	<li><strong><?php echo $session->getFlash(); ?></strong></li>
+	<li class="bg-warning"><strong><?php echo $session->getFlash(); ?></strong></li>
 </ul>
 <?php endif; ?>
 <div class="products">
 <h2>Products</h2>
-<?php if ($stmt->rowCount() > 0): ?>
+<?php if ($stmt->rowCount() > '0'): ?>
 <?php foreach ($products as $product): ?>
 				<ul>
 					<li><h3><?php echo $product['name']?></h3></li>

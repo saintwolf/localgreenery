@@ -24,29 +24,29 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
 // Check if form was sent
 if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Product')) {
-	$name = trim($_POST['name']) == '' ? $product['name'] : $_POST['name'];
-	$type = trim($_POST['type']) == '' ? $product['type'] : $_POST['type'];
-	$weight = trim($_POST['weight']) == '' ? $product['weight'] : $_POST['weight'];
-	$price = trim($_POST['price']) == '' ? $product['price'] : $_POST['price'];
-	$active = trim($_POST['active']) == '' ? $product['active'] : $_POST['active'];
-	$imageUrl = trim($_POST['image_url']) == '' ? $product['image_url'] : $_POST['image_url'];
+	$product['name'] = (trim($_POST['name']) == '') ? $product['name'] : $_POST['name'];
+	$product['type'] = (trim($_POST['type']) == '') ? $product['type'] : $_POST['type'];
+	$product['weight'] = (trim($_POST['weight']) == '') ? $product['weight'] : $_POST['weight'];
+	$product['price'] = (trim($_POST['price']) == '') ? $product['price'] : $_POST['price'];
+	$product['active'] = ($_POST['active']) ? 'Y':'N';
+	
+	$imageUrl = (trim($_POST['image_url']) == '') ? $product['image_url'] : $_POST['image_url'];
 	$productId = $_GET['id'];
 	
 	// Don't care about conflicting names here.
         $db = DB::getInstance();
 		$sql = "UPDATE `products` SET `name` = :name, `type` = :type, `weight` = :weight, `price` = :price, `image_url` = :imageUrl, `active` = :active WHERE `id` = :productId";
 		$stmt = $db->prepare($sql);
-		$stmt->bindParam(':name', $name);
-		$stmt->bindParam(':type', $type);
-		$stmt->bindParam(':weight', $weight);
-		$stmt->bindParam(':price', $price);
+		$stmt->bindParam(':name', $product['name']);
+		$stmt->bindParam(':type', $product['type']);
+		$stmt->bindParam(':weight', $product['weight']);
+		$stmt->bindParam(':price', $product['price']);
 		$stmt->bindParam(':imageUrl', $imageUrl);
-		$stmt->bindParam(':active', $active);
+		$stmt->bindParam(':active', $product['active']);
 		$stmt->bindParam(':productId', $productId);
-		$stmt->execute();
-		
-		if ($stmt->rowCount() > 0) {
-			$session->setFlash('User Modified');
+
+		if ($stmt->execute()) {
+			$session->setFlash('Product Modified');
 			header('location:index.php');
 			exit;
 		}
@@ -57,11 +57,24 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 		<strong>WARNING: THIS FORM IS NOT VALIDATED. ANYTHING YOU INPUT WILL BE SENT!</strong>
 		<form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $_GET['id']; ?>" method="post">
 			<fieldset>
+            
+            	<?php
+					echo '<pre>';
+						print_r($product);
+					echo '</pre>';
+				?>
+                
+                <?php
+					echo '<pre>';
+						print_r($_POST);
+					echo '</pre>';
+				?>
+            
 				<table>
 						<?php if ($session->hasFlash() && is_array($session->getFlash())) : ?>
 					<ul>
 						<?php foreach ($session->getFlash() as $error) : ?>
-						<li><?php echo $error; ?></li>
+						<li class="bg-warning"><?php echo $error; ?></li>
 						<?php endforeach; ?>
 					</ul>
 					<?php elseif ($session->hasFlash()) : ?>
@@ -88,8 +101,7 @@ if (isset($_POST['createproduct']) && ($_POST['createproduct'] == 'Modify Produc
 					<tr>
 						<td><label for="active">Active: </label></td>
 						<td>
-							<input type="radio" name="active" value="Y" <?php if ($product['active'] == 'Y') echo 'checked="checked"'?> /> Y<br />
-							<input type="radio" name="active" value="N" <?php if ($product['active'] == 'N') echo 'checked="checked"'?> /> N
+							<input type="checkbox" value="<?php echo ($product['active'] == 'Y') ? 'Y':'N'; ?>" name="active" <?php echo ($product['active'] == 'Y') ? 'checked':''; ?> />
 						</td>
 					</tr>
 					<tr>

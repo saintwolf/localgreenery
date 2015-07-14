@@ -1,4 +1,10 @@
 <?php
+session_start();
+ob_start();
+
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 define('LG_ROOT', dirname(__DIR__));
 define('DS', '/');
 

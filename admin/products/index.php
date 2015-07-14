@@ -13,7 +13,7 @@ require(LG_ROOT . DS . 'templates' . DS . 'header.php');
 ?>
 <h1>Product List</h1>
 		<?php if ($session->hasFlash()) : ?>
-		<p>
+		<p class="bg-warning">
 			<?php echo $session->getFlash(); ?>
 		</p>
 		<?php endif; ?>
